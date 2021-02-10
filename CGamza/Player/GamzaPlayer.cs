@@ -56,8 +56,6 @@ namespace CGamza.Player
           break;
       }
 
-      int level = 0;
-
       CalculateLevel();
       ApplyLevel();
     }
@@ -70,7 +68,8 @@ namespace CGamza.Player
 
     private void CalculateLevel()
     {
-      while (Math.Pow(levelCoe, this.level) < this.exp)
+      int level = 0;
+      while (Math.Pow(levelCoe, this.level) < exp)
         level++;
     }
     
