@@ -20,7 +20,8 @@ namespace CGamza
       q.Add(new SelectableQuestion("캐릭터 확인하기"));
       q.Add(new SelectableQuestion("도감 확인하기"));
 
-      Util.AskSelectableQuestion(q);
+      var answer = Util.AskSelectableQuestion(q);
+      Console.WriteLine(answer);
     }
   }
 }
