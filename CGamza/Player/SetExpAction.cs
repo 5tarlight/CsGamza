@@ -4,6 +4,5 @@
   {
     Set,
     Up,
-    Down,
   }
 }

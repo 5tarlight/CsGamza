@@ -30,17 +30,17 @@ namespace CGamza.Player
       switch (type)
       {
         case SetHealthAction.Set:
-          if (health > _maxHealth) this._health = _maxHealth;
-          else if (health < 0) this._health = -1;
-          else this._health = health;
+          if (health > _maxHealth) _health = _maxHealth;
+          else if (health < 0) _health = -1;
+          else _health = health;
           break;
         case SetHealthAction.Up:
-          this._health += health;
-          if (this._health > _maxHealth) this._health = _maxHealth;
+          _health += health;
+          if (_health > _maxHealth) _health = _maxHealth;
           break;
         case SetHealthAction.Down:
-          this._health -= health;
-          if (this._health < 0) this._health = -1;
+          _health -= health;
+          if (_health < 0) _health = -1;
           break;
       }
     }
@@ -50,10 +50,10 @@ namespace CGamza.Player
       switch (type)
       {
         case SetExpAction.Set:
-          this._exp = exp;
+          _exp = exp;
           break;
         case SetExpAction.Up:
-          this._exp += exp;
+          _exp += exp;
           break;
       }
 
@@ -70,13 +70,13 @@ namespace CGamza.Player
     private void CalculateLevel()
     {
       int level = 0;
-      while (Math.Pow(LevelCoe, this._level) < _exp)
+      while (Math.Pow(LevelCoe, _level) < _exp)
         level++;
     }
     
     private void ApplyLevel()
     {
-      _maxHealth = Math.Pow(HealthCoe, this._level) + BaseHealth;
+      _maxHealth = Math.Pow(HealthCoe, _level) + BaseHealth;
     }
   }
 }
