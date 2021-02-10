@@ -25,9 +25,44 @@ namespace CGamza.util
       Console.ReadKey();
     }
     
-    public static int SelectableQuestion(List<SelectableQuestion> questions)
+    public static int AskSelectableQuestion(List<SelectableQuestion> questions)
     {
-      return 0;
+      var cursor = 0;
+      var selectionEnd = false;
+
+      while (!selectionEnd)
+      {
+        Console.Clear();
+        for (int i = 0; i < questions.Count; i++)
+        {
+          var msg = $"{i + 1}. {questions[i].GetQuestion()}";
+          
+          if (i == cursor)
+            WriteColor(msg);
+          else
+            WriteColor(msg, Colors.txtMuted);
+        }
+        
+        Console.WriteLine();
+        WriteColor("\n↑ ↓ Enter");
+
+        ConsoleKey key = Console.ReadKey().Key;
+
+        switch (key)
+        {
+          case ConsoleKey.UpArrow:
+            if (cursor != 0) cursor--;
+            break;
+          case ConsoleKey.DownArrow:
+            if (cursor != questions.Count - 1) cursor++;
+            break;
+          case ConsoleKey.Enter:
+            selectionEnd = true;
+            break;
+        }
+      }
+
+      return cursor;
     }
   }
 }
