@@ -1,4 +1,7 @@
 ﻿using System;
+using CGamza.util;
+using Colorify;
+using Colorify.UI;
 
 namespace CGamza
 {
@@ -6,7 +9,9 @@ namespace CGamza
   {
     static void Main(string[] args)
     {
-      Console.WriteLine("Hello World!");
+      Util.Colorify = new Format(Theme.Dark);
+      
+      Util.DisplayLogo();
     }
   }
 }
