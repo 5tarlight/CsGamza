@@ -1,4 +1,6 @@
-﻿using Colorify;
+﻿using System;
+using System.Collections.Generic;
+using Colorify;
 
 namespace CGamza.util
 {
@@ -15,6 +17,17 @@ namespace CGamza.util
     {
       if (isInline) Colorify.Write(text, color);
       else Colorify.WriteLine(text, color);
+    }
+
+    public static void Pause()
+    {
+      WriteColor("계속하려면 아무키나 누르세요.");
+      Console.ReadKey();
+    }
+    
+    public static int SelectableQuestion(List<SelectableQuestion> questions)
+    {
+      return 0;
     }
   }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using CGamza.util;
+﻿using CGamza.util;
 using Colorify;
 using Colorify.UI;
 
@@ -12,6 +11,7 @@ namespace CGamza
       Util.Colorify = new Format(Theme.Dark);
       
       Util.DisplayLogo();
+      Util.Pause();
     }
   }
 }
