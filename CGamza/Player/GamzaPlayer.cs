@@ -4,13 +4,13 @@ namespace CGamza.Player
 {
   public class GamzaPlayer : IPlayer
   {
-    private string Name { get; set; }
-    private string Profile { get; set; }
-    private double _health;
-    private double _maxHealth;
-    private double _exp;
-    private int _level;
-    private const double LevelCoe = 1.075;
+    public string Name { get; set; }
+    public string Profile { get; set; }
+    public double Health { get; set; }
+    public double MaxHealth { get; set; }
+    public double Exp { get; set; }
+    public int Level { get; set; }
+    private const double LevelCoe = 1.2;
     private const double HealthCoe = 1.075;
     private const double BaseHealth = 100;
 
@@ -18,29 +18,29 @@ namespace CGamza.Player
     {
       Name = name;
       Profile = profile;
-      _exp = 0;
-      _level = 0;
+      Exp = 0;
+      Level = 0;
       CalculateLevel();
       ApplyLevel();
-      _health = _maxHealth;
+      Health = MaxHealth;
     }
-    
+
     public void SetHealth(double health, SetHealthAction type = SetHealthAction.Set)
     {
       switch (type)
       {
         case SetHealthAction.Set:
-          if (health > _maxHealth) _health = _maxHealth;
-          else if (health < 0) _health = -1;
-          else _health = health;
+          if (health > MaxHealth) Health = MaxHealth;
+          else if (health < 0) Health = -1;
+          else Health = health;
           break;
         case SetHealthAction.Up:
-          _health += health;
-          if (_health > _maxHealth) _health = _maxHealth;
+          Health += health;
+          if (Health > MaxHealth) Health = MaxHealth;
           break;
         case SetHealthAction.Down:
-          _health -= health;
-          if (_health < 0) _health = -1;
+          Health -= health;
+          if (Health < 0) Health = -1;
           break;
       }
     }
@@ -50,10 +50,10 @@ namespace CGamza.Player
       switch (type)
       {
         case SetExpAction.Set:
-          _exp = exp;
+          Exp = exp;
           break;
         case SetExpAction.Up:
-          _exp += exp;
+          Exp += exp;
           break;
       }
 
@@ -63,20 +63,22 @@ namespace CGamza.Player
 
     public double GetNeedExpForNextLvl()
     {
-      var up = Math.Pow(LevelCoe, _level + 1);
-      return up - _exp;
+      var up = Math.Pow(LevelCoe, Level + 1);
+      return up - Exp;
     }
 
     private void CalculateLevel()
     {
       int level = 0;
-      while (Math.Pow(LevelCoe, _level) < _exp)
+      while (Math.Pow(LevelCoe, level) < Exp)
         level++;
+
+      Level = level;
     }
-    
+
     private void ApplyLevel()
     {
-      _maxHealth = Math.Pow(HealthCoe, _level) + BaseHealth;
+      MaxHealth = Math.Pow(HealthCoe, Level) + BaseHealth;
     }
   }
 }
