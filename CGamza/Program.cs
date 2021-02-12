@@ -31,7 +31,7 @@ namespace CGamza
           q.Add(new SelectableQuestion(p));
         }
 
-        var playerNo = Util.AskSelectableQuestion(q);
+        var playerNo = Util.AskSelectableQuestion("플레이어를 선택하세요.", q);
         
         Console.WriteLine(q[playerNo].GetQuestion());
         PlayerManager.LoadPlayer(q[playerNo].GetQuestion());
@@ -43,7 +43,7 @@ namespace CGamza
         q.Add(new SelectableQuestion("캐릭터 확인하기"));
         q.Add(new SelectableQuestion("경험치 올리기"));
 
-        var answer = Util.AskSelectableQuestion(q);
+        var answer = Util.AskSelectableQuestion("무엇을 하시겠습니까", q);
 
         switch (answer)
         {

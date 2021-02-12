@@ -25,7 +25,7 @@ namespace CGamza.util
       Console.ReadKey();
     }
     
-    public static int AskSelectableQuestion(List<SelectableQuestion> questions)
+    public static int AskSelectableQuestion(string state, List<SelectableQuestion> questions)
     {
       var cursor = 0;
       var selectionEnd = false;
@@ -33,6 +33,10 @@ namespace CGamza.util
       while (!selectionEnd)
       {
         Console.Clear();
+        
+        WriteColor(state);
+        WriteColor("");
+        
         for (int i = 0; i < questions.Count; i++)
         {
           var msg = $"{i + 1}. {questions[i].GetQuestion()}";
