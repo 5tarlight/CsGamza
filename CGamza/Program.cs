@@ -17,8 +17,26 @@ namespace CGamza
       Util.DisplayLogo();
       Util.Pause();
 
-      PlayerManager.LoadPlayer();
+      var players = PlayerManager.LoadPlayerList();
 
+      if (players.Count < 1)
+      {
+        Util.WriteColor("No Player found");
+      }
+      else
+      {
+        var q = new List<SelectableQuestion>();
+        foreach (var p in players)
+        {
+          q.Add(new SelectableQuestion(p));
+        }
+
+        var playerNo = Util.AskSelectableQuestion(q);
+        
+        Console.WriteLine(q[playerNo].GetQuestion());
+        PlayerManager.LoadPlayer(q[playerNo].GetQuestion());
+      }
+      
       while (true)
       {
         var q = new List<SelectableQuestion>();
