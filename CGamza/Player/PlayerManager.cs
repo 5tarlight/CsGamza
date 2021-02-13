@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Xml.Serialization;
 using CGamza.util;
 using Colorify;
 
@@ -63,9 +64,38 @@ namespace CGamza.Player
     public static void LoadPlayer(string name)
     {
       CheckPlayerDir(name);
-      CurrentPlayer = new GamzaPlayer(name, "테스트용");
+      var path = $"{Dir}/{CurrentPlayer.Name}/profile{Suffix}";
+      var formatter = new XmlSerializer(typeof(GamzaPlayer));
+      var fs = new FileStream(path, FileMode.OpenOrCreate);
+      var buffer = new byte[fs.Length];
+      fs.Read(buffer, 0, (int) fs.Length);
+      var ms = new MemoryStream(buffer);
+
+      CurrentPlayer = (GamzaPlayer) formatter.Deserialize(ms);
     }
 
+    public static void CreatePlayerFile(GamzaPlayer player)
+    {
+      CheckPlayerDir(player.Name);
+
+      var path = $"{Dir}/{player.Name}/profile{Suffix}";
+      FileStream file = new FileStream(path, FileMode.OpenOrCreate);
+      XmlSerializer formatter = new XmlSerializer(typeof(GamzaPlayer));
+      formatter.Serialize(file, player);
+    }
+    
+    public static void SaveCurrentPlayer()
+    {
+      if (CurrentPlayer == null) return;
+      
+      CheckPlayerDir(CurrentPlayer.Name);
+
+      var path = $"{Dir}/{CurrentPlayer.Name}/profile{Suffix}";
+      FileStream file = new FileStream(path, FileMode.OpenOrCreate);
+      XmlSerializer formatter = new XmlSerializer(typeof(GamzaPlayer));
+      formatter.Serialize(file, CurrentPlayer);
+    }
+    
     public static void PrintCurrnetPlayerInfo()
     {
       Util.WriteColor($"이름 : {CurrentPlayer.Name}");
