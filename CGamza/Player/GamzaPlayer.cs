@@ -2,6 +2,7 @@
 
 namespace CGamza.Player
 {
+  [Serializable]
   public class GamzaPlayer : IPlayer
   {
     public string Name { get; set; }
@@ -14,6 +15,10 @@ namespace CGamza.Player
     private const double HealthCoe = 1.075;
     private const double BaseHealth = 100;
 
+    public GamzaPlayer() : this("unknown-user", "invalid-user")
+    {
+    }
+    
     public GamzaPlayer(string name, string profile)
     {
       Name = name;
@@ -80,5 +85,7 @@ namespace CGamza.Player
     {
       MaxHealth = Math.Pow(HealthCoe, Level) + BaseHealth;
     }
+    
+    
   }
 }

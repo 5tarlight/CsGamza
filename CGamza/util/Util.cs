@@ -68,5 +68,21 @@ namespace CGamza.util
 
       return cursor;
     }
+
+    public static string AskLine(string question, bool isInline = false)
+    {
+      if (isInline)
+      {
+        WriteColor($"{question} : ", Colors.txtDefault, true);
+
+        return Console.ReadLine();
+      }
+      else
+      {
+        WriteColor(question);
+
+        return Console.ReadLine();
+      }
+    }
   }
 }

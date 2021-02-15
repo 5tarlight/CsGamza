@@ -11,6 +11,8 @@ namespace CGamza
   {
     static void Main(string[] args)
     {
+      AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit);
+      
       Util.Colorify = new Format(Theme.Dark);
       Console.Clear();
       
@@ -21,7 +23,13 @@ namespace CGamza
 
       if (players.Count < 1)
       {
-        Util.WriteColor("No Player found");
+        Util.WriteColor("새로운 캐릭터를 생성합니다.");
+        var name = Util.AskLine("이름", true);
+        var profile = Util.AskLine("프로필 설명", true);
+
+        var player = new GamzaPlayer(name, profile);
+        PlayerManager.CreatePlayerFile(player);
+        PlayerManager.LoadPlayer(name);
       }
       else
       {
@@ -42,6 +50,7 @@ namespace CGamza
         var q = new List<SelectableQuestion>();
         q.Add(new SelectableQuestion("캐릭터 확인하기"));
         q.Add(new SelectableQuestion("경험치 올리기"));
+        q.Add(new SelectableQuestion("종료"));
 
         var answer = Util.AskSelectableQuestion("무엇을 하시겠습니까", q);
 
@@ -57,8 +66,18 @@ namespace CGamza
             Util.WriteColor("경험치를 올렸다.");
             Util.Pause();
             break;
+          case 2:
+            Environment.Exit(0);
+            break;
         }
       }
+    }
+    
+    // Save on Exit
+    static void OnProcessExit(object sender, EventArgs e)
+    {
+      PlayerManager.SaveCurrentPlayer();
+      Util.WriteColor("저장되었습니다.");
     }
   }
 }

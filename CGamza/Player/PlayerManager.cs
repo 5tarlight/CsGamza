@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Xml.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using CGamza.util;
 using Colorify;
 
@@ -10,7 +10,7 @@ namespace CGamza.Player
   public class PlayerManager
   {
     public static GamzaPlayer CurrentPlayer { get; set; }
-    private const string Dir = "./data";
+    private const string Dir = "data";
     private const string Suffix = ".pdata";
 
     private static void CheckDir()
@@ -63,15 +63,35 @@ namespace CGamza.Player
     
     public static void LoadPlayer(string name)
     {
-      CheckPlayerDir(name);
-      var path = $"{Dir}/{CurrentPlayer.Name}/profile{Suffix}";
-      var formatter = new XmlSerializer(typeof(GamzaPlayer));
-      var fs = new FileStream(path, FileMode.OpenOrCreate);
-      var buffer = new byte[fs.Length];
-      fs.Read(buffer, 0, (int) fs.Length);
-      var ms = new MemoryStream(buffer);
+      for (int i = 0; i < 5; i++)
+      {
+        try
+        {
+          CheckPlayerDir(name);
 
-      CurrentPlayer = (GamzaPlayer) formatter.Deserialize(ms);
+          var path = $"{Dir}/{name}/profile{Suffix}";
+          Stream ws = new FileStream(path, FileMode.OpenOrCreate);
+          BinaryFormatter deserializer = new BinaryFormatter();
+
+          CurrentPlayer = (GamzaPlayer) deserializer.Deserialize(ws);
+          ws.Close();
+
+          break;
+        }
+        catch (Exception)
+        {
+          Util.WriteColor("Retrying...");
+        }
+      }
+      
+      // var formatter = new XmlSerializer(typeof(GamzaPlayer));
+      // var fs = new FileStream(path, FileMode.OpenOrCreate);
+      // var buffer = new byte[fs.Length];
+      // fs.Read(buffer, 0, (int) fs.Length);
+      // var ms = new MemoryStream(buffer);
+      //
+      // CurrentPlayer = (GamzaPlayer) formatter.Deserialize(ms);
+      // ms.Close();
     }
 
     public static void CreatePlayerFile(GamzaPlayer player)
@@ -79,9 +99,17 @@ namespace CGamza.Player
       CheckPlayerDir(player.Name);
 
       var path = $"{Dir}/{player.Name}/profile{Suffix}";
-      FileStream file = new FileStream(path, FileMode.OpenOrCreate);
-      XmlSerializer formatter = new XmlSerializer(typeof(GamzaPlayer));
-      formatter.Serialize(file, player);
+
+      Stream ws = new FileStream(path, FileMode.OpenOrCreate);
+      BinaryFormatter serializer = new BinaryFormatter();
+      
+      serializer.Serialize(ws, player);
+
+      // FileStream file = new FileStream(path, FileMode.OpenOrCreate);
+      // XmlSerializer formatter = new XmlSerializer(typeof(GamzaPlayer));
+      // formatter.Serialize(file, player);
+      //
+      // file.Close();
     }
     
     public static void SaveCurrentPlayer()
@@ -91,9 +119,17 @@ namespace CGamza.Player
       CheckPlayerDir(CurrentPlayer.Name);
 
       var path = $"{Dir}/{CurrentPlayer.Name}/profile{Suffix}";
-      FileStream file = new FileStream(path, FileMode.OpenOrCreate);
-      XmlSerializer formatter = new XmlSerializer(typeof(GamzaPlayer));
-      formatter.Serialize(file, CurrentPlayer);
+
+      Stream ws = new FileStream(path, FileMode.OpenOrCreate);
+      BinaryFormatter serializer = new BinaryFormatter();
+      
+      serializer.Serialize(ws, CurrentPlayer);
+      ws.Close();
+      // FileStream file = new FileStream(path, FileMode.OpenOrCreate);
+      // XmlSerializer formatter = new XmlSerializer(typeof(GamzaPlayer));
+      // formatter.Serialize(file, CurrentPlayer);
+      //
+      // file.Close();
     }
     
     public static void PrintCurrnetPlayerInfo()
