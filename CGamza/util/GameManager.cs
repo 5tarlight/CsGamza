@@ -6,6 +6,19 @@ namespace CGamza.util
 {
   public class GameManager
   {
+    private static void CreatePlayer()
+    {
+      Console.Clear();
+      Util.WriteColor("새로운 캐릭터를 생성합니다.");
+      var name = Util.AskLine("이름", true);
+      var profile = Util.AskLine("프로필 설명", true);
+
+      var player = new GamzaPlayer(name, profile);
+      PlayerManager.CreatePlayerFile(player);
+      
+      SelectPlayer();
+    }
+    
     public static void SelectPlayer()
     {
       if (PlayerManager.CurrentPlayer != null)
@@ -14,43 +27,24 @@ namespace CGamza.util
       var players = PlayerManager.LoadPlayerList();
 
       if (players.Count < 1)
-      {
-        Console.Clear();
-        Util.WriteColor("새로운 캐릭터를 생성합니다.");
-        var name = Util.AskLine("이름", true);
-        var profile = Util.AskLine("프로필 설명", true);
-
-        var player = new GamzaPlayer(name, profile);
-        PlayerManager.CreatePlayerFile(player);
-        
-        SelectPlayer();
-      }
+        CreatePlayer();
       else
       {
-        // var q = new List<SelectableQuestion>();
-        // q.Add(new SelectableQuestion("새로 생성하기"));
-        // foreach (var p in players)
-        // {
-        //   q.Add(new SelectableQuestion(p));
-        // }
-        //
-        // var playerNo = Util.AskSelectableQuestion("플레이어를 선택하세요.", q);
-        //
-        // if (playerNo == 0)
-        // {
-        //   CreatePlayer();
-        //   return;
-        // }
-        //
-        // PlayerManager.LoadPlayer(q[playerNo - 1].GetQuestion());
-        
         var q = new List<SelectableQuestion>();
+        q.Add(new SelectableQuestion("새로 만들기"));
+        
         foreach (var p in players)
         {
           q.Add(new SelectableQuestion(p));
         }
 
         var playerNo = Util.AskSelectableQuestion("플레이어를 선택하세요.", q);
+
+        if (playerNo == 0)
+        {
+          CreatePlayer();
+          return;
+        }
         
         PlayerManager.LoadPlayer(q[playerNo].GetQuestion());
       }
