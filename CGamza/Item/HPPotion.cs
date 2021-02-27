@@ -2,7 +2,7 @@
 
 namespace CGamza.Item
 {
-  public class HPPotion : Item, IUsableItem
+  public class HPPotion : CItem, IUsableItem
   {
     public HPPotion() : base("HP 포션")
     {
