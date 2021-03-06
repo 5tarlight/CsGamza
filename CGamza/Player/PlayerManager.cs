@@ -11,6 +11,7 @@ namespace CGamza.Player
   public class PlayerManager
   {
     public static GamzaPlayer CurrentPlayer { get; private set; }
+    public static Inventory.Inventory CurrentInventory { get; private set; }
     private const string Dir = "data";
     private const string Suffix = ".pdata";
 
@@ -84,7 +85,9 @@ namespace CGamza.Player
           Util.WriteColor("Retrying...");
         }
       }
-      
+
+      CurrentInventory = InventoryManager.loadInventory(name);
+
       // var formatter = new XmlSerializer(typeof(GamzaPlayer));
       // var fs = new FileStream(path, FileMode.OpenOrCreate);
       // var buffer = new byte[fs.Length];
