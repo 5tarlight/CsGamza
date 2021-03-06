@@ -11,9 +11,14 @@ namespace CGamza.Inventory
     private const string Dir = "data";
     private const string Suffix = ".idata";
 
+    private static string Path(string name)
+    {
+      return $"{Dir}/{name}/inventory{Suffix}";
+    }
+    
     public static void initEmptyInventory(string name)
     {
-      var path = $"{Dir}/{name}/inventory{Suffix}";
+      var path = Path(name);
       
       Stream ws = new FileStream(path, FileMode.OpenOrCreate);
       BinaryFormatter serializer = new BinaryFormatter();
@@ -28,7 +33,7 @@ namespace CGamza.Inventory
       {
         try
         {
-          var path = $"{Dir}/{name}/profile{Suffix}";
+          var path = Path(name);
           Stream ws = new FileStream(path, FileMode.OpenOrCreate);
           BinaryFormatter deserializer = new BinaryFormatter();
 
@@ -44,6 +49,19 @@ namespace CGamza.Inventory
       }
 
       return null;
+    }
+
+    public static void saveCurrentInventory()
+    {
+      if (PlayerManager.CurrentInventory == null) return;
+      
+      var path = Path(PlayerManager.CurrentPlayer.Name);
+
+      Stream ws = new FileStream(path, FileMode.OpenOrCreate);
+      BinaryFormatter serializer = new BinaryFormatter();
+      
+      serializer.Serialize(ws, PlayerManager.CurrentInventory);
+      ws.Close();
     }
   }
 }

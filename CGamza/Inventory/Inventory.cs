@@ -47,7 +47,7 @@ namespace CGamza.Inventory
     {
       if (Has(item))
       {
-        var index = items.FindIndex(item => item.Item.Equals(item));
+        var index = items.FindIndex(pi => pi.Item.Equals(item));
         var current = new InventoryItem(items[index]);
         current.Count += count;
 

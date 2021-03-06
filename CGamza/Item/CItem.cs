@@ -1,5 +1,8 @@
-﻿namespace CGamza.Item
+﻿using System;
+
+namespace CGamza.Item
 {
+  [Serializable]
   public class CItem
   {
     public string Name { get; }

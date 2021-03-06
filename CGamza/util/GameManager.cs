@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using CGamza.Item;
 using CGamza.Player;
 
 namespace CGamza.util
@@ -56,6 +57,8 @@ namespace CGamza.util
       q.Add(new SelectableQuestion("캐릭터 확인하기"));
       q.Add(new SelectableQuestion("경험치 올리기"));
       q.Add(new SelectableQuestion("캐릭터 바꾸기"));
+      q.Add(new SelectableQuestion("인벤토리 확인하기"));
+      q.Add(new SelectableQuestion("아이템 하나 넣기"));
       q.Add(new SelectableQuestion("종료"));
       
       var answer = Util.AskSelectableQuestion("무엇을 하시겠습니까", q);
@@ -76,6 +79,14 @@ namespace CGamza.util
           SelectPlayer();
           break;
         case 3:
+          Util.WriteColor(PlayerManager.CurrentInventory.items.Count.ToString());
+          Util.Pause();
+          break;
+        case 4:
+          PlayerManager.CurrentInventory.addItem(new HPPotion(), 1);
+          Util.WriteColor("아이템 하나를 지급했습니다.");
+          break;
+        case 5:
           Environment.Exit(0);
           break;
       }

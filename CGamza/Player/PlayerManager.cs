@@ -132,6 +132,9 @@ namespace CGamza.Player
       
       serializer.Serialize(ws, CurrentPlayer);
       ws.Close();
+      
+      InventoryManager.saveCurrentInventory();
+      
       // FileStream file = new FileStream(path, FileMode.OpenOrCreate);
       // XmlSerializer formatter = new XmlSerializer(typeof(GamzaPlayer));
       // formatter.Serialize(file, CurrentPlayer);
