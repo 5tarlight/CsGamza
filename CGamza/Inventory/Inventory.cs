@@ -1,11 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using CGamza.Item;
 using System.Linq;
 
 namespace CGamza.Inventory
 {
+  [Serializable]
   public class Inventory
   {
+    [Serializable]
     public class InventoryItem
     {
       public CItem Item { get; }

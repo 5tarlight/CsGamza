@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using CGamza.Inventory;
 using CGamza.util;
 using Colorify;
 
@@ -25,7 +26,7 @@ namespace CGamza.Player
       }
     }
 
-    private static void CheckPlayerDir(string name)
+    public static void CheckPlayerDir(string name)
     {
       CheckDir();
 
@@ -97,7 +98,9 @@ namespace CGamza.Player
     public static void CreatePlayerFile(GamzaPlayer player)
     {
       CheckPlayerDir(player.Name);
-
+  
+      InventoryManager.initEmptyInventory(player.Name);
+      
       var path = $"{Dir}/{player.Name}/profile{Suffix}";
 
       Stream ws = new FileStream(path, FileMode.OpenOrCreate);
