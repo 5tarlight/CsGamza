@@ -1,8 +1,11 @@
-﻿namespace CGamza.Item
+﻿using System;
+
+namespace CGamza.Item
 {
+  [Serializable]
   public class SlimeFluid : CItem
   {
-    SlimeFluid() : base("슬라임 점액")
+    public SlimeFluid() : base("슬라임 점액")
     {
     }
   }

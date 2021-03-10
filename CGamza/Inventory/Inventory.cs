@@ -43,7 +43,7 @@ namespace CGamza.Inventory
       return has.Any();
     }
 
-    public void addItem(CItem item, int count)
+    public void AddItem(CItem item, int count)
     {
       if (Has(item))
       {

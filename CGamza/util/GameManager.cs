@@ -59,6 +59,7 @@ namespace CGamza.util
       q.Add(new SelectableQuestion("캐릭터 바꾸기"));
       q.Add(new SelectableQuestion("인벤토리 확인하기"));
       q.Add(new SelectableQuestion("아이템 하나 넣기"));
+      q.Add(new SelectableQuestion("다른 아이템 하나 넣기"));
       q.Add(new SelectableQuestion("종료"));
       
       var answer = Util.AskSelectableQuestion("무엇을 하시겠습니까", q);
@@ -83,10 +84,14 @@ namespace CGamza.util
           Util.Pause();
           break;
         case 4:
-          PlayerManager.CurrentInventory.addItem(new HPPotion(), 1);
+          PlayerManager.CurrentInventory.AddItem(new HPPotion(), 1);
           Util.WriteColor("아이템 하나를 지급했습니다.");
           break;
         case 5:
+          PlayerManager.CurrentInventory.AddItem(new SlimeFluid(), 1);
+          Util.WriteColor("아이템 하나를 지급했습니다.");
+          break;
+        case 6:
           Environment.Exit(0);
           break;
       }
