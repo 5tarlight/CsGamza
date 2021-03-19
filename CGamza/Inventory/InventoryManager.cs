@@ -16,14 +16,14 @@ namespace CGamza.Inventory
     {
       return $"{Dir}/{name}/inventory{Suffix}";
     }
-    
+
     public static void initEmptyInventory(string name)
     {
       var path = Path(name);
-      
+
       Stream ws = new FileStream(path, FileMode.OpenOrCreate);
       BinaryFormatter serializer = new BinaryFormatter();
-      
+
       serializer.Serialize(ws, new Inventory());
       ws.Close();
     }
@@ -55,101 +55,147 @@ namespace CGamza.Inventory
     public static void saveCurrentInventory()
     {
       if (PlayerManager.CurrentInventory == null) return;
-      
+
       var path = Path(PlayerManager.CurrentPlayer.Name);
 
       Stream ws = new FileStream(path, FileMode.OpenOrCreate);
       BinaryFormatter serializer = new BinaryFormatter();
-      
+
       serializer.Serialize(ws, PlayerManager.CurrentInventory);
       ws.Close();
     }
 
-    public static void DisplayCurrentInventory()
+    public static void DisplayCurrentInventory(int row = 5)
     {
       var inv = PlayerManager.CurrentInventory;
       if (inv == null) return;
-      
-      const int itemInPage = 5;
-      var maxPage = inv.items.Count / itemInPage;
-      var currentPage = 0;
-      var cursor = 0;
-      
+      var page = 0;
+      var index = 0;
+
       while (true)
       {
         Console.Clear();
-        int pageItem;
 
-        if (inv.items.Count > itemInPage)
-          pageItem = itemInPage;
-        else
-          pageItem = inv.items.Count;
-        
-        for (int i = 0; i < pageItem; i++)
+        var list = inv.items.Count - 1 >= page * row + row
+          ? inv.items.GetRange(page * row, row)
+          : inv.items.GetRange(page * row, inv.items.Count - page * row);
+
+        for (var i = 0; i < list.Count; i++)
         {
-          var index = currentPage * itemInPage + cursor;
-          Inventory.InventoryItem invItem;
+          var msg = $"{page * row + i + 1}. {list[i].Item.Name} x{list[i].Count}";
 
-          string msg;
-          
-          if (inv.items.Count > 0)
-          {
-            invItem = inv.items[index];
-            msg = $"{i + 1}. {invItem.Item.Name}";
-          }
-          else
-          {
-            invItem = null;
-            msg = "아이템이 없습니다.";
-          }
-
-          if (i == cursor)
+          if (i == index)
             Util.WriteColor(msg);
           else
             Util.WriteColor(msg, Colors.txtMuted);
         }
-        
+
         Util.WriteColor("");
-        Util.WriteColor($"{currentPage} / {maxPage + 1}");
-        Util.WriteColor("← → ↑ ↓ 로 이동, ESC를 눌러 나가기");
+        Util.WriteColor($"\n페이지: {page + 1}, 개수 : {page * row + index + 1}/{inv.items.Count}");
+        Util.WriteColor("↑ ↓ ← →");
+        Util.WriteColor("Enter로 선택, Esc로 종료");
 
         var key = Console.ReadKey().Key;
 
         switch (key)
         {
           case ConsoleKey.UpArrow:
-            if (cursor > 0) cursor--;
+            if (index != 0) index--;
             break;
           case ConsoleKey.DownArrow:
-            if (cursor < itemInPage - 1) cursor++;
+            if (index != inv.items.Count - 1) index++;
             break;
           case ConsoleKey.LeftArrow:
-            if (currentPage != 0)
+            if (page != 0)
             {
-              currentPage--;
-              cursor = 0;
+              page--;
+              index = 0;
             }
 
             break;
           case ConsoleKey.RightArrow:
-            if (currentPage != maxPage)
+            var maxPage = (int) Math.Ceiling(((double) inv.items.Count / row)) - 1;
+            if (page != maxPage)
             {
-              currentPage++;
-              cursor = 0;
+              page++;
+              index = 0;
             }
-            
+
             break;
           case ConsoleKey.Enter:
-            if (inv.items.Count == 0)
-              goto endOfWhile;
-            Util.WriteColor("개발중");
-            Util.Pause();
-            break;
+            return;
           case ConsoleKey.Escape:
-            goto endOfWhile;
+            return;
         }
       }
-      endOfWhile: {}
+
+      //   
+      //   while (true)
+      //   {
+      //     Console.Clear();
+      //     var pageItem = inv.items.Count > itemInPage ? itemInPage : inv.items.Count;
+      //
+      //     for (var i = 0; i < pageItem; i++)
+      //     {
+      //       var index = currentPage * itemInPage + cursor;
+      //
+      //       string msg;
+      //       
+      //       if (inv.items.Count > 0)
+      //       {
+      //         var curItem = inv.items[index];
+      //         msg = $"{i + 1}. {curItem.Item.Name}";
+      //       }
+      //       else
+      //         msg = "아이템이 없습니다.";
+      //
+      //       if (i == cursor)
+      //         Util.WriteColor(msg);
+      //       else
+      //         Util.WriteColor(msg, Colors.txtMuted);
+      //     }
+      //     
+      //     Util.WriteColor("");
+      //     Util.WriteColor($"{currentPage + 1} / {maxPage}");
+      //     Util.WriteColor("← → ↑ ↓ 로 이동, ESC를 눌러 나가기");
+      //
+      //     var key = Console.ReadKey().Key;
+      //
+      //     switch (key)
+      //     {
+      //       case ConsoleKey.UpArrow:
+      //         if (cursor > 0) cursor--;
+      //         break;
+      //       case ConsoleKey.DownArrow:
+      //         if (cursor < itemInPage - 1) cursor++;
+      //         break;
+      //       case ConsoleKey.LeftArrow:
+      //         if (currentPage != 0)
+      //         {
+      //           currentPage--;
+      //           cursor = 0;
+      //         }
+      //
+      //         break;
+      //       case ConsoleKey.RightArrow:
+      //         if (currentPage != maxPage - 1)
+      //         {
+      //           currentPage++;
+      //           cursor = 0;
+      //         }
+      //         
+      //         break;
+      //       case ConsoleKey.Enter:
+      //         if (inv.items.Count == 0)
+      //           goto endOfWhile;
+      //         Util.WriteColor("개발중");
+      //         Util.Pause();
+      //         break;
+      //       case ConsoleKey.Escape:
+      //         goto endOfWhile;
+      //     }
+      //   }
+      //   endOfWhile: {}
     }
   }
 }
