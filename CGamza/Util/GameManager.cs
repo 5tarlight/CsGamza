@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using CGamza.Inventory;
 using CGamza.Item;
 using CGamza.Player;
 
@@ -80,8 +81,7 @@ namespace CGamza.util
           SelectPlayer();
           break;
         case 3:
-          Util.WriteColor(PlayerManager.CurrentInventory.items.Count.ToString());
-          Util.Pause();
+          InventoryManager.DisplayCurrentInventory();
           break;
         case 4:
           PlayerManager.CurrentInventory.AddItem(new HPPotion(), 1);
