@@ -83,7 +83,7 @@ namespace CGamza.Inventory
 
     private void TrimInv()
     {
-      foreach (var v in Items)
+      foreach (var v in Items.ToList())
       {
         if (v.Count == 0)
           Items.Remove(v);

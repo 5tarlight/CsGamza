@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using CGamza.Item;
 using CGamza.Player;
 using CGamza.util;
 using Colorify;
@@ -65,7 +66,7 @@ namespace CGamza.Inventory
       ws.Close();
     }
 
-    public static void DisplayCurrentInventory(int row = 5)
+    public static void DisplayCurrentInventory(int row = 10)
     {
       var inv = PlayerManager.CurrentInventory;
       if (inv == null) return;
@@ -74,11 +75,14 @@ namespace CGamza.Inventory
 
       while (true)
       {
+        refresh:
+        {
+        }
         Console.Clear();
 
-        var list = inv.items.Count - 1 >= page * row + row
-          ? inv.items.GetRange(page * row, row)
-          : inv.items.GetRange(page * row, inv.items.Count - page * row);
+        var list = inv.Items.Count - 1 >= page * row + row
+          ? inv.Items.GetRange(page * row, row)
+          : inv.Items.GetRange(page * row, inv.Items.Count - page * row);
 
         for (var i = 0; i < list.Count; i++)
         {
@@ -91,111 +95,79 @@ namespace CGamza.Inventory
         }
 
         Util.WriteColor("");
-        Util.WriteColor($"\n페이지: {page + 1}, 개수 : {page * row + index + 1}/{inv.items.Count}");
+        Util.WriteColor($"\n페이지: {page + 1}, 개수 : {page * row + index + 1}/{inv.Items.Count}");
         Util.WriteColor("↑ ↓ ← →");
         Util.WriteColor("Enter로 선택, Esc로 종료");
 
         var key = Console.ReadKey().Key;
 
-        switch (key)
+        if (inv.Items.Count > 0)
         {
-          case ConsoleKey.UpArrow:
-            if (index != 0) index--;
-            break;
-          case ConsoleKey.DownArrow:
-            if (index != inv.items.Count - 1) index++;
-            break;
-          case ConsoleKey.LeftArrow:
-            if (page != 0)
-            {
-              page--;
-              index = 0;
-            }
+          switch (key)
+          {
+            case ConsoleKey.UpArrow:
+              if (index != 0) index--;
+              break;
+            case ConsoleKey.DownArrow:
+              if (index != inv.Items.Count - 1) index++;
+              break;
+            case ConsoleKey.LeftArrow:
+              if (page != 0)
+              {
+                page--;
+                index = 0;
+              }
 
-            break;
-          case ConsoleKey.RightArrow:
-            var maxPage = (int) Math.Ceiling(((double) inv.items.Count / row)) - 1;
-            if (page != maxPage)
-            {
-              page++;
-              index = 0;
-            }
+              break;
+            case ConsoleKey.RightArrow:
+              var maxPage = (int) Math.Ceiling(((double) inv.Items.Count / row)) - 1;
+              if (page != maxPage)
+              {
+                page++;
+                index = 0;
+              }
 
-            break;
-          case ConsoleKey.Enter:
-            return;
-          case ConsoleKey.Escape:
-            return;
+              break;
+            case ConsoleKey.Enter:
+              var result = UseItem(inv.Items[index]);
+
+              if (result)
+              {
+                Util.WriteColor("아이템을 사용했습니다.");
+                Util.Pause();
+                goto refresh;
+              }
+              else
+                Util.WriteColor("사용할 수 없습니다.");
+
+              Util.Pause();
+
+              break;
+            case ConsoleKey.Escape:
+              return;
+          }
         }
+        else
+          return;
+      }
+    }
+
+    public static bool UseItem(Inventory.InventoryItem item, int count = 1)
+    {
+      if (item.Item is IUsableItem)
+      {
+        var usable = item.Item as IUsableItem;
+
+        if (usable == null) return false;
+
+        for (var i = 0; i < count; i++)
+          usable.onUse(PlayerManager.CurrentPlayer);
+        
+        PlayerManager.CurrentInventory.MinusItem(item.Item, count);
+        return true;
       }
 
-      //   
-      //   while (true)
-      //   {
-      //     Console.Clear();
-      //     var pageItem = inv.items.Count > itemInPage ? itemInPage : inv.items.Count;
-      //
-      //     for (var i = 0; i < pageItem; i++)
-      //     {
-      //       var index = currentPage * itemInPage + cursor;
-      //
-      //       string msg;
-      //       
-      //       if (inv.items.Count > 0)
-      //       {
-      //         var curItem = inv.items[index];
-      //         msg = $"{i + 1}. {curItem.Item.Name}";
-      //       }
-      //       else
-      //         msg = "아이템이 없습니다.";
-      //
-      //       if (i == cursor)
-      //         Util.WriteColor(msg);
-      //       else
-      //         Util.WriteColor(msg, Colors.txtMuted);
-      //     }
-      //     
-      //     Util.WriteColor("");
-      //     Util.WriteColor($"{currentPage + 1} / {maxPage}");
-      //     Util.WriteColor("← → ↑ ↓ 로 이동, ESC를 눌러 나가기");
-      //
-      //     var key = Console.ReadKey().Key;
-      //
-      //     switch (key)
-      //     {
-      //       case ConsoleKey.UpArrow:
-      //         if (cursor > 0) cursor--;
-      //         break;
-      //       case ConsoleKey.DownArrow:
-      //         if (cursor < itemInPage - 1) cursor++;
-      //         break;
-      //       case ConsoleKey.LeftArrow:
-      //         if (currentPage != 0)
-      //         {
-      //           currentPage--;
-      //           cursor = 0;
-      //         }
-      //
-      //         break;
-      //       case ConsoleKey.RightArrow:
-      //         if (currentPage != maxPage - 1)
-      //         {
-      //           currentPage++;
-      //           cursor = 0;
-      //         }
-      //         
-      //         break;
-      //       case ConsoleKey.Enter:
-      //         if (inv.items.Count == 0)
-      //           goto endOfWhile;
-      //         Util.WriteColor("개발중");
-      //         Util.Pause();
-      //         break;
-      //       case ConsoleKey.Escape:
-      //         goto endOfWhile;
-      //     }
-      //   }
-      //   endOfWhile: {}
+      return false;
     }
   }
 }

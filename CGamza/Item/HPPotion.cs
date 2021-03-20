@@ -12,7 +12,7 @@ namespace CGamza.Item
     
     public void onUse(GamzaPlayer user)
     {
-      user.SetHealth(200, SetHealthAction.Up);
+      user.SetHealth(50, SetHealthAction.Up);
     }
   }
 }
