@@ -56,7 +56,7 @@ namespace CGamza.util
     {
       var q = new List<SelectableQuestion>();
       q.Add(new SelectableQuestion("캐릭터 확인하기"));
-      q.Add(new SelectableQuestion("경험치 올리기"));
+      q.Add(new SelectableQuestion("채력 깎기"));
       q.Add(new SelectableQuestion("캐릭터 바꾸기"));
       q.Add(new SelectableQuestion("인벤토리 확인하기"));
       q.Add(new SelectableQuestion("아이템 하나 넣기"));
@@ -73,9 +73,7 @@ namespace CGamza.util
           Util.Pause();
           break;
         case 1:
-          PlayerManager.CurrentPlayer.SetExp(2, SetExpAction.Up);
-          Util.WriteColor("경험치를 올렸다.");
-          Util.Pause();
+          PlayerManager.CurrentPlayer.SetHealth(50, SetHealthAction.Down);
           break;
         case 2:
           SelectPlayer();
