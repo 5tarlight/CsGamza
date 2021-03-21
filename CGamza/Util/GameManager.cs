@@ -82,7 +82,7 @@ namespace CGamza.util
           InventoryManager.DisplayCurrentInventory();
           break;
         case 4:
-          PlayerManager.CurrentInventory.AddItem(new HPPotion(), 1);
+          PlayerManager.CurrentInventory.AddItem(new HpPotion(), 1);
           Util.WriteColor("아이템 하나를 지급했습니다.");
           break;
         case 5:

@@ -4,9 +4,9 @@ using CGamza.Player;
 namespace CGamza.Item
 {
   [Serializable]
-  public class HPPotion : CItem, IUsableItem
+  public class HpPotion : CItem, IUsableItem
   {
-    public HPPotion() : base("HP 포션")
+    public HpPotion() : base("HP 포션")
     {
     }
     
