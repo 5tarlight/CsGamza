@@ -68,6 +68,7 @@ namespace CGamza.util
       {
         case 0:
           PlayerManager.PrintCurrnetPlayerInfo();
+          Util.Pause();
           break;
         case 1:
           SelectPlayer();
