@@ -9,4 +9,9 @@
       <PackageReference Include="dein.Colorify" Version="2.6.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Entity" />
+      <Folder Include="Terrain" />
+    </ItemGroup>
+
 </Project>
