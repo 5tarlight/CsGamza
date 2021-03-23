@@ -56,7 +56,6 @@ namespace CGamza.util
     {
       var q = new List<SelectableQuestion>();
       q.Add(new SelectableQuestion("캐릭터 확인하기"));
-      q.Add(new SelectableQuestion("채력 깎기"));
       q.Add(new SelectableQuestion("캐릭터 바꾸기"));
       q.Add(new SelectableQuestion("인벤토리 확인하기"));
       q.Add(new SelectableQuestion("아이템 하나 넣기"));
@@ -68,28 +67,24 @@ namespace CGamza.util
       switch (answer)
       {
         case 0:
-          Console.Clear();
           PlayerManager.PrintCurrnetPlayerInfo();
           Util.Pause();
           break;
         case 1:
-          PlayerManager.CurrentPlayer.SetHealth(50, SetHealthAction.Down);
-          break;
-        case 2:
           SelectPlayer();
           break;
-        case 3:
+        case 2:
           InventoryManager.DisplayCurrentInventory();
           break;
-        case 4:
+        case 3:
           PlayerManager.CurrentInventory.AddItem(new HpPotion(), 1);
           Util.WriteColor("아이템 하나를 지급했습니다.");
           break;
-        case 5:
+        case 4:
           PlayerManager.CurrentInventory.AddItem(new SlimeFluid(), 1);
           Util.WriteColor("아이템 하나를 지급했습니다.");
           break;
-        case 6:
+        case 5:
           Environment.Exit(0);
           break;
       }
