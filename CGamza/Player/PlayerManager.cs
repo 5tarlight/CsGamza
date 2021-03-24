@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using CGamza.Inventory;
-using CGamza.Util;
+using CGamza.Terrain.Town;
+using CGamza.Terrain.Road;
 using Colorify;
 
 namespace CGamza.Player
@@ -146,6 +147,14 @@ namespace CGamza.Player
     {
       Util.Util.WriteColor($"이름 : {CurrentPlayer.Name}");
       Util.Util.WriteColor(CurrentPlayer.Profile);
+      Util.Util.WriteColor("");
+
+      Util.Util.WriteColor($"돈 : {CurrentPlayer.Money}");
+      
+      if (CurrentPlayer.Location.IsTown)
+        Util.Util.WriteColor((CurrentPlayer.Location.Terrain as Town).Name);
+      else if (CurrentPlayer.Location.IsRoad)
+        Util.Util.WriteColor((CurrentPlayer.Location.Terrain as Road).Name);
     }
   }
 }

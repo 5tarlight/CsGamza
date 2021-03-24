@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 
 namespace CGamza.Terrain.Town
 {
+  [Serializable]
   public class Town : ITerrain
   {
     public string Name { get; }

@@ -1,5 +1,8 @@
+using System;
+
 namespace CGamza.Terrain.Facility
 {
+  [Serializable]
   public abstract class Facility
   {
     public string Name { get; }

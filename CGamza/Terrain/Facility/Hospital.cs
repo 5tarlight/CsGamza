@@ -1,5 +1,8 @@
+using System;
+
 namespace CGamza.Terrain.Facility
 {
+  [Serializable]
   public class Hospital : Facility
   {
     public Hospital(): base("포켓몬센터", 0)

@@ -1,5 +1,8 @@
+using System;
+
 namespace CGamza.Terrain
 {
+  [Serializable]
   public class Location
   {
     public ITerrain Terrain { get; set; }
@@ -16,6 +19,11 @@ namespace CGamza.Terrain
       {
         return Terrain is Road.Road;
       }
+    }
+
+    public Location(ITerrain loc)
+    {
+      Terrain = loc;
     }
   }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using CGamza.Terrain;
+using CGamza.Terrain.Town;
 
 namespace CGamza.Player
 {
@@ -27,6 +28,7 @@ namespace CGamza.Player
     {
       Name = name;
       Profile = profile;
+      Location = new Location(new BeginningVillage());
       // Exp = 0;
       // Level = 0;
       // CalculateLevel();
