@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Colorify;
 
-namespace CGamza.util
+namespace CGamza.Util
 {
   public class Util
   {
@@ -62,6 +62,46 @@ namespace CGamza.util
             break;
           case ConsoleKey.Enter:
             selectionEnd = true;
+            break;
+          case ConsoleKey.D1:
+            if (questions.Count > 0)
+              cursor = 0;
+            break;
+          case ConsoleKey.D2:
+            if (questions.Count > 1)
+              cursor = 1;
+            break;
+          case ConsoleKey.D3:
+            if (questions.Count > 2)
+              cursor = 2;
+            break;
+          case ConsoleKey.D4:
+            if (questions.Count > 3)
+              cursor = 3;
+            break;
+          case ConsoleKey.D5:
+            if (questions.Count > 4)
+              cursor = 4;
+            break;
+          case ConsoleKey.D6:
+            if (questions.Count > 5)
+              cursor = 5;
+            break;
+          case ConsoleKey.D7:
+            if (questions.Count > 6)
+              cursor = 6;
+            break;
+          case ConsoleKey.D8:
+            if (questions.Count > 7)
+              cursor = 7;
+            break;
+          case ConsoleKey.D9:
+            if (questions.Count > 8)
+              cursor = 8;
+            break;
+          case ConsoleKey.D0:
+            if (questions.Count > 9)
+              cursor = 9;
             break;
         }
       }

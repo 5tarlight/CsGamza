@@ -1,6 +1,6 @@
 ﻿using System;
 using CGamza.Player;
-using CGamza.util;
+using CGamza.Util;
 using Colorify;
 using Colorify.UI;
 
@@ -11,12 +11,12 @@ namespace CGamza
     static void Main(string[] args)
     {
       AppDomain.CurrentDomain.ProcessExit += OnProcessExit;
-      
-      Util.Colorify = new Format(Theme.Dark);
+
+      Util.Util.Colorify = new Format(Theme.Dark);
       Console.Clear();
-      
-      Util.DisplayLogo();
-      Util.Pause();
+
+      Util.Util.DisplayLogo();
+      Util.Util.Pause();
 
       GameManager.SelectPlayer();
       while (true)
@@ -27,7 +27,7 @@ namespace CGamza
     static void OnProcessExit(object sender, EventArgs e)
     {
       PlayerManager.SaveCurrentPlayer();
-      Util.WriteColor("저장되었습니다.");
+      Util.Util.WriteColor("저장되었습니다.");
     }
   }
 }
