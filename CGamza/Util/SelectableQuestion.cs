@@ -1,4 +1,4 @@
-﻿namespace CGamza.util
+﻿namespace CGamza.Util
 {
   public class SelectableQuestion
   {

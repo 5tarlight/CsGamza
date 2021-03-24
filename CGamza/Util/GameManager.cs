@@ -4,7 +4,7 @@ using CGamza.Inventory;
 using CGamza.Item;
 using CGamza.Player;
 
-namespace CGamza.util
+namespace CGamza.Util
 {
   public class GameManager
   {

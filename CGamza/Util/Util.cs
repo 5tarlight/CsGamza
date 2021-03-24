@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Colorify;
 
-namespace CGamza.util
+namespace CGamza.Util
 {
   public class Util
   {

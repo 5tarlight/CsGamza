@@ -3,7 +3,7 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using CGamza.Item;
 using CGamza.Player;
-using CGamza.util;
+using CGamza.Util;
 using Colorify;
 
 namespace CGamza.Inventory
@@ -46,7 +46,7 @@ namespace CGamza.Inventory
         }
         catch (Exception)
         {
-          Util.WriteColor("Retrying...");
+          Util.Util.WriteColor("Retrying...");
         }
       }
 
@@ -89,15 +89,15 @@ namespace CGamza.Inventory
           var msg = $"{page * row + i + 1}. {list[i].Item.Name} x{list[i].Count}";
 
           if (i == index)
-            Util.WriteColor(msg);
+            Util.Util.WriteColor(msg);
           else
-            Util.WriteColor(msg, Colors.txtMuted);
+            Util.Util.WriteColor(msg, Colors.txtMuted);
         }
 
-        Util.WriteColor("");
-        Util.WriteColor($"\n페이지: {page + 1}, 개수 : {page * row + index + 1}/{inv.Items.Count}");
-        Util.WriteColor("↑ ↓ ← →");
-        Util.WriteColor("Enter로 선택, Esc로 종료");
+        Util.Util.WriteColor("");
+        Util.Util.WriteColor($"\n페이지: {page + 1}, 개수 : {page * row + index + 1}/{inv.Items.Count}");
+        Util.Util.WriteColor("↑ ↓ ← →");
+        Util.Util.WriteColor("Enter로 선택, Esc로 종료");
 
         var key = Console.ReadKey().Key;
 
@@ -133,14 +133,14 @@ namespace CGamza.Inventory
 
               if (result)
               {
-                Util.WriteColor("아이템을 사용했습니다.");
-                Util.Pause();
+                Util.Util.WriteColor("아이템을 사용했습니다.");
+                Util.Util.Pause();
                 goto refresh;
               }
               else
-                Util.WriteColor("사용할 수 없습니다.");
+                Util.Util.WriteColor("사용할 수 없습니다.");
 
-              Util.Pause();
+              Util.Util.Pause();
 
               break;
             case ConsoleKey.Escape:

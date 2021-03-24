@@ -1,6 +1,6 @@
 namespace CGamza.Terrain.Facility
 {
-  public class Facility
+  public abstract class Facility
   {
     public string Name { get; }
     public double Fee { get; }
@@ -10,5 +10,7 @@ namespace CGamza.Terrain.Facility
       Name = name;
       Fee = fee;
     }
+
+    public abstract void OnUse();
   }
 }

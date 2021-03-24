@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using CGamza.Inventory;
-using CGamza.util;
+using CGamza.Util;
 using Colorify;
 
 namespace CGamza.Player
@@ -23,7 +23,7 @@ namespace CGamza.Player
       }
       catch (Exception e)
       {
-        Util.WriteColor(e.Message, Colors.txtDanger);
+        Util.Util.WriteColor(e.Message, Colors.txtDanger);
       }
     }
 
@@ -38,7 +38,7 @@ namespace CGamza.Player
       }
       catch (Exception e)
       {
-        Util.WriteColor(e.Message, Colors.txtDanger);
+        Util.Util.WriteColor(e.Message, Colors.txtDanger);
       }
     }
     
@@ -82,7 +82,7 @@ namespace CGamza.Player
         }
         catch (Exception)
         {
-          Util.WriteColor("Retrying...");
+          Util.Util.WriteColor("Retrying...");
         }
       }
 
@@ -144,8 +144,8 @@ namespace CGamza.Player
     
     public static void PrintCurrnetPlayerInfo()
     {
-      Util.WriteColor($"이름 : {CurrentPlayer.Name}");
-      Util.WriteColor(CurrentPlayer.Profile);
+      Util.Util.WriteColor($"이름 : {CurrentPlayer.Name}");
+      Util.Util.WriteColor(CurrentPlayer.Profile);
     }
   }
 }
