@@ -145,6 +145,8 @@ namespace CGamza.Player
     
     public static void PrintCurrnetPlayerInfo()
     {
+      Console.Clear();
+
       Util.Util.WriteColor($"이름 : {CurrentPlayer.Name}");
       Util.Util.WriteColor(CurrentPlayer.Profile);
       Util.Util.WriteColor("");
