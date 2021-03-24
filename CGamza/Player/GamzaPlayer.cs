@@ -1,4 +1,5 @@
 ﻿using System;
+using CGamza.Terrain;
 
 namespace CGamza.Player
 {
@@ -8,6 +9,8 @@ namespace CGamza.Player
     public string Name { get; set; }
     public string Profile { get; set; }
     public long Money { get; set; }
+    public Location Location { get; }
+
     // public double Health { get; set; }
     // public double MaxHealth { get; set; }
     // public double Exp { get; set; }
