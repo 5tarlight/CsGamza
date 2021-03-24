@@ -5,7 +5,7 @@ namespace CGamza.Terrain
   [Serializable]
   public class Location
   {
-    public ITerrain Terrain { get; set; }
+    public ITerrain Terrain { get; private set; }
     public bool IsTown
     {
       get
@@ -24,6 +24,11 @@ namespace CGamza.Terrain
     public Location(ITerrain loc)
     {
       Terrain = loc;
+    }
+
+    public void Move(ITerrain terrain)
+    {
+      Terrain = terrain;
     }
   }
 }

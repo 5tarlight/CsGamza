@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using CGamza.Inventory;
 using CGamza.Item;
 using CGamza.Player;
+using CGamza.Terrain.Town;
 
 namespace CGamza.Util
 {
@@ -58,8 +59,8 @@ namespace CGamza.Util
       q.Add(new SelectableQuestion("캐릭터 확인하기"));
       q.Add(new SelectableQuestion("캐릭터 바꾸기"));
       q.Add(new SelectableQuestion("인벤토리 확인하기"));
-      q.Add(new SelectableQuestion("아이템 하나 넣기"));
-      q.Add(new SelectableQuestion("다른 아이템 하나 넣기"));
+      q.Add(new SelectableQuestion("태초마을로"));
+      q.Add(new SelectableQuestion("진달래마을로"));
       q.Add(new SelectableQuestion("종료"));
       
       var answer = Util.AskSelectableQuestion("무엇을 하시겠습니까", q);
@@ -77,12 +78,10 @@ namespace CGamza.Util
           InventoryManager.DisplayCurrentInventory();
           break;
         case 3:
-          PlayerManager.CurrentInventory.AddItem(new HpPotion(), 1);
-          Util.WriteColor("아이템 하나를 지급했습니다.");
+          PlayerManager.CurrentPlayer.Location.Move(Towns.beginningVillage);
           break;
         case 4:
-          PlayerManager.CurrentInventory.AddItem(new SlimeFluid(), 1);
-          Util.WriteColor("아이템 하나를 지급했습니다.");
+          PlayerManager.CurrentPlayer.Location.Move(Towns.azaleaVillage);
           break;
         case 5:
           Environment.Exit(0);
