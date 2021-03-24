@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace CGamza.Terrain.Town
 {
-  public class Town
+  public class Town : ITerrain
   {
     public string Name { get; }
     public List<Facility.Facility> Facilities { get; }

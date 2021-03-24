@@ -1,6 +1,6 @@
 namespace CGamza.Terrain.Road
 {
-  public class Road
+  public class Road : ITerrain
   {
     public string Name { get; }
 
