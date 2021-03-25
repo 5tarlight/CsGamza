@@ -8,16 +8,18 @@ namespace CGamza.Terrain.Road
   public class Road : ITerrain
   {
     public string Name { get; }
-    public List<CMonster> Monsters { get; }
+    public List<RoadMonster> Monsters { get; }
 
     public Road(string name)
     {
       Name = name;
+      Monsters = new List<RoadMonster>();
     }
 
-    protected void AddMonster(CMonster monster)
+    protected void AddMonster(CMonster monster, double frequency)
     {
-      Monsters.Add(monster);
+      var rm = new RoadMonster(monster, frequency);
+      Monsters.Add(rm);
     }
   }
 }
