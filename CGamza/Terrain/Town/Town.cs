@@ -15,7 +15,7 @@ namespace CGamza.Terrain.Town
       Facilities = new List<Facility.Facility>();
     }
 
-    public void AddFaclity(Facility.Facility facility)
+    protected void AddFaclity(Facility.Facility facility)
     {
       Facilities.Add(facility);
     }
