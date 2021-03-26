@@ -15,7 +15,19 @@ namespace CGamza.Util
       Util.WriteColor("새로운 캐릭터를 생성합니다.");
 
       Func<string, bool> checkNull = str => {
-        if (str == null || str.Trim() == "")
+        if (
+          str == null ||
+          str.Trim() == "" ||
+          str.IndexOf(">") != -1 ||
+          str.IndexOf("<") != -1 ||
+          str.IndexOf("|") != -1 ||
+          str.IndexOf("/") != -1 ||
+          str.IndexOf("\\") != -1 ||
+          str.IndexOf(":") != -1 ||
+          str.IndexOf("*") != -1 ||
+          str.IndexOf("?") != -1 ||
+          str.IndexOf("\"") != -1
+        )
           return false;
         else
           return true;
