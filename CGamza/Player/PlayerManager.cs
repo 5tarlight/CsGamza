@@ -6,6 +6,7 @@ using CGamza.Inventory;
 using CGamza.Terrain.Town;
 using CGamza.Terrain.Road;
 using Colorify;
+using CGamza.Entity.Pet;
 
 namespace CGamza.Player
 {
@@ -105,6 +106,7 @@ namespace CGamza.Player
       CheckPlayerDir(player.Name);
   
       InventoryManager.initEmptyInventory(player.Name);
+      PetManger.InitEmptyFile(player.Name);
       
       var path = $"{Dir}/{player.Name}/profile{Suffix}";
 

@@ -14,7 +14,8 @@ fs.readdir('./data', (err, files) => {
     fs.readdir(`./data/${u.name}`, (err, files) => {
       if (
         files.includes('inventory.idata') &&
-        files.includes('profile.pdata')
+        files.includes('profile.pdata') &&
+        files.includes('pet.pet')
       ) {
         const index = users.findIndex(us => us.name == u.name)
         users[index].valid = true

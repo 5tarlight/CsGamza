@@ -3,7 +3,6 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using CGamza.Item;
 using CGamza.Player;
-using CGamza.Util;
 using Colorify;
 
 namespace CGamza.Inventory
@@ -24,7 +23,7 @@ namespace CGamza.Inventory
       var path = Path(name);
 
       Stream ws = new FileStream(path, FileMode.OpenOrCreate);
-      BinaryFormatter serializer = new BinaryFormatter();
+      var serializer = new BinaryFormatter();
 
       serializer.Serialize(ws, new Inventory());
       ws.Close();
