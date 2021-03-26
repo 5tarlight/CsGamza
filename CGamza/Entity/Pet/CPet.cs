@@ -3,6 +3,7 @@ using CGamza.Player;
 
 namespace CGamza.Entity.Pet
 {
+  [Serializable]
   public class CPet
   {
     public string Name { get; }
