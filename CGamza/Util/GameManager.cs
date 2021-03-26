@@ -13,8 +13,16 @@ namespace CGamza.Util
     {
       Console.Clear();
       Util.WriteColor("새로운 캐릭터를 생성합니다.");
-      var name = Util.AskLine("이름", true);
-      var profile = Util.AskLine("프로필 설명", true);
+
+      Func<string, bool> checkNull = str => {
+        if (str == null || str.Trim() == "")
+          return false;
+        else
+          return true;
+      };
+
+      var name = Util.AskLine("이름", checkNull, true);
+      var profile = Util.AskLine("프로필 설명", checkNull, true);
 
       var player = new GamzaPlayer(name, profile);
       PlayerManager.CreatePlayerFile(player);

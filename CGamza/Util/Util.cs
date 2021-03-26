@@ -124,5 +124,17 @@ namespace CGamza.Util
         return Console.ReadLine();
       }
     }
+
+    public static string AskLine(string question, Func<string, bool> check, bool isInline = false)
+    {
+      string result;
+      do
+      {
+        result = AskLine(question, isInline);
+      }
+      while (!check(result));
+
+      return result;
+    }
   }
 }
