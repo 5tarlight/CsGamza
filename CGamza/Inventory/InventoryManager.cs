@@ -8,6 +8,7 @@ using Colorify;
 
 namespace CGamza.Inventory
 {
+  #pragma warning disable SYSLIB0011
   public class InventoryManager
   {
     private const string Dir = "data";

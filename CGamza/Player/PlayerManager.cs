@@ -9,6 +9,7 @@ using Colorify;
 
 namespace CGamza.Player
 {
+  #pragma warning disable SYSLIB0011
   public class PlayerManager
   {
     public static GamzaPlayer CurrentPlayer { get; private set; }
