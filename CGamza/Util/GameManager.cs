@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using CGamza.Entity.Pet;
 using CGamza.Inventory;
 using CGamza.Item;
 using CGamza.Player;
@@ -59,6 +60,8 @@ namespace CGamza.Util
       q.Add(new SelectableQuestion("캐릭터 확인하기"));
       q.Add(new SelectableQuestion("캐릭터 바꾸기"));
       q.Add(new SelectableQuestion("인벤토리 확인하기"));
+      q.Add(new SelectableQuestion("펫 확인하기"));
+      q.Add(new SelectableQuestion("펫 추가하기"));
       q.Add(new SelectableQuestion("태초마을로"));
       q.Add(new SelectableQuestion("진달래마을로"));
       q.Add(new SelectableQuestion("종료"));
@@ -78,12 +81,19 @@ namespace CGamza.Util
           InventoryManager.DisplayCurrentInventory();
           break;
         case 3:
-          PlayerManager.CurrentPlayer.Location.Move(Towns.beginningVillage);
+          Util.WriteColor(PlayerManager.CurrentPlayer.GetPetsCount().ToString());
+          Util.Pause();
           break;
         case 4:
-          PlayerManager.CurrentPlayer.Location.Move(Towns.azaleaVillage);
+          PlayerManager.CurrentPlayer.AddPet(new FireSoul());
           break;
         case 5:
+          PlayerManager.CurrentPlayer.Location.Move(Towns.beginningVillage);
+          break;
+        case 6:
+          PlayerManager.CurrentPlayer.Location.Move(Towns.azaleaVillage);
+          break;
+        case 7:
           Environment.Exit(0);
           break;
       }
