@@ -129,7 +129,9 @@ namespace CGamza.Entity.Pet
 
               break;
             case ConsoleKey.Enter:
-              // TODO
+              ShowPetInfo(list[index]);
+              ConsoleUtil.Pause();
+
               break;
             case ConsoleKey.Escape:
               return;
@@ -178,6 +180,21 @@ namespace CGamza.Entity.Pet
         else
           return;
       }
+    }
+
+    public static string GetPetInfo(CPet pet)
+    {
+      return $"이름 : {pet.Name}\n"
+        + "\n"
+        + $"Lv. {pet.Level}\n"
+        + $"채력 : {pet.Health} / {pet.MaxHealth}\n"
+        + $"경험치 : {pet.Exp}\n"
+        + $"다음 레벨까지 {pet.GetNeedExpForNextLvl()}필요";
+    }
+
+    public static void ShowPetInfo(CPet pet)
+    {
+      ConsoleUtil.WriteColor(GetPetInfo(pet));
     }
   }
 }

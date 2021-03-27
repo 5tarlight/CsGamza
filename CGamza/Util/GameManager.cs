@@ -106,7 +106,10 @@ namespace CGamza.Util
           for (int i = 0; i < PlayerManager.CurrentPlayer.GetPetsCount(); i++)
             pets.Add(new SelectableQuestion(PlayerManager.CurrentPlayer.Pets[i].Name));
 
-          ConsoleUtil.AskSelectableQuestion("펫", pets);
+          var index = ConsoleUtil.AskSelectableQuestion("펫", pets);
+
+          PetManger.ShowPetInfo(PlayerManager.CurrentPlayer.Pets[index]);
+          ConsoleUtil.Pause();
           break;
         case 4:
           SelectStartPet();
