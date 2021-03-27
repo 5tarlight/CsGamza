@@ -8,6 +8,7 @@ namespace CGamza.Entity.Pet
   {
     public string Name { get; }
     public EntityType Type { get; }
+    public EntityType? SecondaryType { get; }
     public string NickName { get; set; }
 
     public double Health { get; set; }
@@ -18,10 +19,11 @@ namespace CGamza.Entity.Pet
     private const double HealthCoe = 1.075;
     private const double BaseHealth = 100;
 
-    public CPet(string name, EntityType type)
+    public CPet(string name, EntityType type, EntityType? secondaryType = null)
     {
       Name = name;
       Type = type;
+      SecondaryType = secondaryType;
 
       Exp = 0;
       Level = 0;

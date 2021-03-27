@@ -1,3 +1,5 @@
+using System.IO.Pipes;
+using System.Reflection.PortableExecutable;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -184,12 +186,19 @@ namespace CGamza.Entity.Pet
 
     public static string GetPetInfo(CPet pet)
     {
-      return $"이름 : {pet.Name}\n"
-        + "\n"
+      var msg = $"이름 : {pet.Name}\n";
+
+      msg += pet.SecondaryType is EntityType
+        ? $"{pet.Type.ToString()}, {pet.SecondaryType.ToString()}"
+        : pet.Type.ToString();
+      
+      msg += "\n"
         + $"Lv. {pet.Level}\n"
         + $"채력 : {pet.Health} / {pet.MaxHealth}\n"
         + $"경험치 : {pet.Exp}\n"
         + $"다음 레벨까지 {pet.GetNeedExpForNextLvl()}필요";
+
+      return msg;
     }
 
     public static void ShowPetInfo(CPet pet)
