@@ -2,6 +2,7 @@
 using CGamza.Entity.Pet;
 using CGamza.Terrain;
 using CGamza.Terrain.Town;
+using CGamza.Util;
 
 namespace CGamza.Player
 {
@@ -23,7 +24,7 @@ namespace CGamza.Player
       Name = name;
       Profile = profile;
       Location = new Location(new BeginningVillage());
-      Pets = new CPet[6] { null, null, null, null, null, null };
+      Pets = new CPet[4] { null, null, null, null };
     }
 
     public int GetPetsCount()
@@ -39,13 +40,19 @@ namespace CGamza.Player
 
     public bool IsPetFull()
     {
-      return GetPetsCount() >= 6;
+      return GetPetsCount() >= 4;
     }
 
     public void AddPet(CPet pet)
     {
       if (!IsPetFull())
         Pets[GetPetsCount()] = pet;
+      else
+      {
+        PetManger.AddPet(PlayerManager.CurrentPlayer.Name, pet);
+        ConsoleUtil.WriteColor("펫쉘로 보내졌습니다.");
+        ConsoleUtil.Pause();
+      }
     }
   }
 }

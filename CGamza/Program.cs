@@ -12,11 +12,11 @@ namespace CGamza
     {
       AppDomain.CurrentDomain.ProcessExit += OnProcessExit;
 
-      Util.Util.Colorify = new Format(Theme.Dark);
+      ConsoleUtil.Colorify = new Format(Theme.Dark);
       Console.Clear();
 
-      Util.Util.DisplayLogo();
-      Util.Util.Pause();
+      ConsoleUtil.DisplayLogo();
+      ConsoleUtil.Pause();
 
       GameManager.SelectPlayer();
       while (true)
@@ -27,7 +27,7 @@ namespace CGamza
     static void OnProcessExit(object sender, EventArgs e)
     {
       PlayerManager.SaveCurrentPlayer();
-      Util.Util.WriteColor("저장되었습니다.");
+      ConsoleUtil.WriteColor("저장되었습니다.");
     }
   }
 }

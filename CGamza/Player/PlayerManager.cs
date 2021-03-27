@@ -7,6 +7,7 @@ using CGamza.Terrain.Town;
 using CGamza.Terrain.Road;
 using Colorify;
 using CGamza.Entity.Pet;
+using CGamza.Util;
 
 namespace CGamza.Player
 {
@@ -26,7 +27,7 @@ namespace CGamza.Player
       }
       catch (Exception e)
       {
-        Util.Util.WriteColor(e.Message, Colors.txtDanger);
+        ConsoleUtil.WriteColor(e.Message, Colors.txtDanger);
       }
     }
 
@@ -41,7 +42,7 @@ namespace CGamza.Player
       }
       catch (Exception e)
       {
-        Util.Util.WriteColor(e.Message, Colors.txtDanger);
+        ConsoleUtil.WriteColor(e.Message, Colors.txtDanger);
       }
     }
     
@@ -85,11 +86,11 @@ namespace CGamza.Player
         }
         catch (Exception)
         {
-          Util.Util.WriteColor("Retrying...");
+          ConsoleUtil.WriteColor("Retrying...");
         }
       }
 
-      CurrentInventory = InventoryManager.loadInventory(name);
+      CurrentInventory = InventoryManager.LoadInventory(name);
 
       // var formatter = new XmlSerializer(typeof(GamzaPlayer));
       // var fs = new FileStream(path, FileMode.OpenOrCreate);
@@ -137,7 +138,7 @@ namespace CGamza.Player
       serializer.Serialize(ws, CurrentPlayer);
       ws.Close();
       
-      InventoryManager.saveCurrentInventory();
+      InventoryManager.SaveCurrentInventory();
       
       // FileStream file = new FileStream(path, FileMode.OpenOrCreate);
       // XmlSerializer formatter = new XmlSerializer(typeof(GamzaPlayer));
@@ -150,16 +151,16 @@ namespace CGamza.Player
     {
       Console.Clear();
 
-      Util.Util.WriteColor($"이름 : {CurrentPlayer.Name}");
-      Util.Util.WriteColor(CurrentPlayer.Profile);
-      Util.Util.WriteColor("");
+      ConsoleUtil.WriteColor($"이름 : {CurrentPlayer.Name}");
+      ConsoleUtil.WriteColor(CurrentPlayer.Profile);
+      ConsoleUtil.WriteColor("");
 
-      Util.Util.WriteColor($"돈 : {CurrentPlayer.Money}");
+      ConsoleUtil.WriteColor($"돈 : {CurrentPlayer.Money}");
       
       if (CurrentPlayer.Location.IsTown)
-        Util.Util.WriteColor((CurrentPlayer.Location.Terrain as Town).Name);
+        ConsoleUtil.WriteColor((CurrentPlayer.Location.Terrain as Town).Name);
       else if (CurrentPlayer.Location.IsRoad)
-        Util.Util.WriteColor((CurrentPlayer.Location.Terrain as Road).Name);
+        ConsoleUtil.WriteColor((CurrentPlayer.Location.Terrain as Road).Name);
     }
   }
 }

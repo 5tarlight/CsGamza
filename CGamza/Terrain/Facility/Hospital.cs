@@ -1,4 +1,5 @@
 using System;
+using CGamza.Util;
 
 namespace CGamza.Terrain.Facility
 {
@@ -10,8 +11,8 @@ namespace CGamza.Terrain.Facility
 
     public override void OnUse()
     {
-      Util.Util.WriteColor("체력을 회복합니다.");
-      Util.Util.Pause();
+      ConsoleUtil.WriteColor("체력을 회복합니다.");
+      ConsoleUtil.Pause();
     }
   }
 }

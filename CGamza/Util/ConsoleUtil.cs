@@ -4,7 +4,7 @@ using Colorify;
 
 namespace CGamza.Util
 {
-  public class Util
+  public class ConsoleUtil
   {
     public static Format Colorify { get; set; }
     

@@ -12,7 +12,7 @@ namespace CGamza.Util
     private static void CreatePlayer()
     {
       Console.Clear();
-      Util.WriteColor("새로운 캐릭터를 생성합니다.");
+      ConsoleUtil.WriteColor("새로운 캐릭터를 생성합니다.");
 
       Func<string, bool> checkNull = str => {
         if (
@@ -33,8 +33,8 @@ namespace CGamza.Util
           return true;
       };
 
-      var name = Util.AskLine("이름", checkNull, true);
-      var profile = Util.AskLine("프로필 설명", checkNull, true);
+      var name = ConsoleUtil.AskLine("이름", checkNull, true);
+      var profile = ConsoleUtil.AskLine("프로필 설명", checkNull, true);
 
       var player = new GamzaPlayer(name, profile);
       PlayerManager.CreatePlayerFile(player);
@@ -61,7 +61,7 @@ namespace CGamza.Util
           q.Add(new SelectableQuestion(p));
         }
 
-        var playerNo = Util.AskSelectableQuestion("플레이어를 선택하세요.", q);
+        var playerNo = ConsoleUtil.AskSelectableQuestion("플레이어를 선택하세요.", q);
 
         if (playerNo == 0)
         {
@@ -82,18 +82,18 @@ namespace CGamza.Util
         new SelectableQuestion("인벤토리 확인하기"),
         new SelectableQuestion("펫 확인하기"),
         new SelectableQuestion("펫 추가하기"),
-        new SelectableQuestion("태초마을로"),
+        new SelectableQuestion("펫쉘 확인하기"),
         new SelectableQuestion("진달래마을로"),
         new SelectableQuestion("종료")
       };
       
-      var answer = Util.AskSelectableQuestion("무엇을 하시겠습니까", q);
+      var answer = ConsoleUtil.AskSelectableQuestion("무엇을 하시겠습니까", q);
 
       switch (answer)
       {
         case 0:
           PlayerManager.PrintCurrnetPlayerInfo();
-          Util.Pause();
+          ConsoleUtil.Pause();
           break;
         case 1:
           SelectPlayer();
@@ -102,14 +102,17 @@ namespace CGamza.Util
           InventoryManager.DisplayCurrentInventory();
           break;
         case 3:
-          Util.WriteColor(PlayerManager.CurrentPlayer.GetPetsCount().ToString());
-          Util.Pause();
+          var pets = new List<SelectableQuestion>();
+          for (int i = 0; i < PlayerManager.CurrentPlayer.GetPetsCount(); i++)
+            pets.Add(new SelectableQuestion(PlayerManager.CurrentPlayer.Pets[i].Name));
+
+          ConsoleUtil.AskSelectableQuestion("펫", pets);
           break;
         case 4:
           SelectStartPet();
           break;
         case 5:
-          PlayerManager.CurrentPlayer.Location.Move(Towns.beginningVillage);
+          PetManger.DisplayPet();
           break;
         case 6:
           PlayerManager.CurrentPlayer.Location.Move(Towns.azaleaVillage);
@@ -131,7 +134,7 @@ namespace CGamza.Util
         new SelectableQuestion("풀의 정령")
       };
 
-      var user = Util.AskSelectableQuestion("펫을 선택하세요.", q);
+      var user = ConsoleUtil.AskSelectableQuestion("펫을 선택하세요.", q);
 
       switch (user)
       {
