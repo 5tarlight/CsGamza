@@ -196,7 +196,15 @@ namespace CGamza.Entity.Pet
         + $"Lv. {pet.Level}\n"
         + $"채력 : {pet.Health} / {pet.MaxHealth}\n"
         + $"경험치 : {pet.Exp}\n"
-        + $"다음 레벨까지 {pet.GetNeedExpForNextLvl()}필요";
+        + $"다음 레벨까지 {pet.GetNeedExpForNextLvl()}필요\n"
+        + "\n"
+        + "기술\n";
+
+      foreach (var s in pet.Skills)
+      {
+        if (s != null)
+          msg += s.Name + "\n";
+      }
 
       return msg;
     }

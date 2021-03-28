@@ -102,15 +102,25 @@ namespace CGamza.Util
           InventoryManager.DisplayCurrentInventory();
           break;
         case 3:
-          var pets = new List<SelectableQuestion>();
-          for (int i = 0; i < PlayerManager.CurrentPlayer.GetPetsCount(); i++)
-            pets.Add(new SelectableQuestion(PlayerManager.CurrentPlayer.Pets[i].Name));
+          if (PlayerManager.CurrentPlayer.GetPetsCount() == 0)
+          {
+            Console.Clear();
+            ConsoleUtil.WriteColor("펫이 없습니다.");
+            ConsoleUtil.Pause();
+            break;
+          }
+          else
+          {
+            var pets = new List<SelectableQuestion>();
+            for (int i = 0; i < PlayerManager.CurrentPlayer.GetPetsCount(); i++)
+              pets.Add(new SelectableQuestion(PlayerManager.CurrentPlayer.Pets[i].Name));
 
-          var index = ConsoleUtil.AskSelectableQuestion("펫", pets);
+            var index = ConsoleUtil.AskSelectableQuestion("펫", pets);
 
-          PetManger.ShowPetInfo(PlayerManager.CurrentPlayer.Pets[index]);
-          ConsoleUtil.Pause();
-          break;
+            PetManger.ShowPetInfo(PlayerManager.CurrentPlayer.Pets[index]);
+            ConsoleUtil.Pause();
+            break;
+          }
         case 4:
           SelectStartPet();
           break;

@@ -1,5 +1,8 @@
 using System;
+using System.Collections.Generic;
+using CGamza.Entity.Pet.Skill;
 using CGamza.Player;
+using CGamza.Util;
 
 namespace CGamza.Entity.Pet
 {
@@ -10,11 +13,14 @@ namespace CGamza.Entity.Pet
     public EntityType Type { get; }
     public EntityType? SecondaryType { get; }
     public string NickName { get; set; }
+    
+    public SSkill[] Skills { get; }
 
     public double Health { get; set; }
     public double MaxHealth { get; set; }
     public double Exp { get; set; }
     public int Level { get; set; }
+
     private const double LevelCoe = 1.2;
     private const double HealthCoe = 1.075;
     private const double BaseHealth = 100;
@@ -25,11 +31,51 @@ namespace CGamza.Entity.Pet
       Type = type;
       SecondaryType = secondaryType;
 
+      Skills = new SSkill[4] { null, null, null, null };
+
       Exp = 0;
       Level = 0;
       CalculateLevel();
       ApplyLevel();
       Health = MaxHealth;
+    }
+
+    public void AddSkill(SSkill skill)
+    {
+      var count = 0;
+      for (var i = 0; i < 4; i++)
+        if (Skills[i] != null)
+          count++;
+
+      if (count != 4)
+      {
+        Skills[count] = skill;
+        ConsoleUtil.WriteColor("기술을 배웠습니다.");
+      }
+      else
+      {
+        var q = new List<SelectableQuestion>();
+
+        q.Add(new SelectableQuestion("잊지 않는다"));
+
+        foreach (var s in Skills)
+        {
+          q.Add(new SelectableQuestion(s.Name));
+        }
+
+        var index = ConsoleUtil.AskSelectableQuestion("어떤 기술을 잊으시겠습니까?", q);
+
+        if (index == 0)
+        {
+          ConsoleUtil.WriteColor("기술을 잊지 않았습니다.");
+        }
+        else
+        {
+          Skills[index - 2] = skill;
+
+        ConsoleUtil.WriteColor("기술을 잊었습니다.");
+        }
+      }
     }
 
     public void SetHealth(double health, SetHealthAction type = SetHealthAction.Set)

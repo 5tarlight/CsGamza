@@ -1,4 +1,5 @@
 using System;
+using CGamza.Entity.Pet.Skill;
 
 namespace CGamza.Entity.Pet
 {
@@ -6,6 +7,8 @@ namespace CGamza.Entity.Pet
   public class GrassSoul : CPet
   {
     public GrassSoul() : base("풀의 정령", EntityType.FIRE)
-    {}
+    {
+      AddSkill(new STackle());
+    }
   }
 }
