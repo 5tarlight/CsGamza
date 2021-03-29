@@ -23,7 +23,7 @@ namespace CGamza.Entity.Pet
     
     public SSkill[] Skills { get; }
 
-    public EntityInfo Info { get; set; } // This must be initialized in child
+    public EntityInfo Info { get; protected set; } // This must be initialized in child
     
     public CPet(string name, EntityType type, EntityType? secondaryType = null)
     {
@@ -107,8 +107,6 @@ namespace CGamza.Entity.Pet
 
     public void SetHealth(double health, HpAction type = HpAction.Set)
     {
-      // 방어력의 10분의 1을 퍼센트로 계산
-
       switch (type)
       {
         case HpAction.Set:
@@ -125,6 +123,15 @@ namespace CGamza.Entity.Pet
           if (Info.Health < 0) Info.Health = -1;
           break;
       }
+    }
+
+    public override string ToString()
+    {
+      return $"{Name}\n"
+        + $"Lv. {Info.Level}\n"
+        + "\n"
+        // + $"공격력 : "
+        + $"방어력 : {Info.AdEndur} {Info.ApEndur}";
     }
   }
 }
