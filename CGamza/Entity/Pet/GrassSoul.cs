@@ -8,6 +8,9 @@ namespace CGamza.Entity.Pet
   {
     public GrassSoul() : base("풀의 정령", EntityType.FIRE)
     {
+      var info = new PetInfo(20, 20);
+      base.Info = info;
+
       AddSkill(new STackle());
     }
   }

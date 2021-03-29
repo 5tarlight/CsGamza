@@ -193,9 +193,9 @@ namespace CGamza.Entity.Pet
         : pet.Type.ToString();
       
       msg += "\n"
-        + $"Lv. {pet.Level}\n"
-        + $"채력 : {pet.Health} / {pet.MaxHealth}\n"
-        + $"경험치 : {pet.Exp}\n"
+        + $"Lv. {pet.Info.Level}\n"
+        + $"채력 : {pet.Info.Health} / {pet.Info.MaxHealth}\n"
+        + $"경험치 : {pet.Info.Exp}\n"
         + $"다음 레벨까지 {pet.GetNeedExpForNextLvl()}필요\n"
         + "\n"
         + "기술\n";
