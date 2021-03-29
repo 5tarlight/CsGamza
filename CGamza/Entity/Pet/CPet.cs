@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using CGamza.Entity.Pet.Skill;
-using CGamza.Player;
+using CGamza.Pet;
 using CGamza.Util;
 
 namespace CGamza.Entity.Pet
@@ -50,36 +50,14 @@ namespace CGamza.Entity.Pet
         Health = MaxHealth;
       }
 
-      public void SetHealth(double health, SetHealthAction type = SetHealthAction.Set)
-      {
-        // 방어력의 10분의 1을 퍼센트로 계산
-
-        switch (type)
-        {
-          case SetHealthAction.Set:
-            if (health > MaxHealth) Health = MaxHealth;
-            else if (health < 0) Health = -1;
-            else Health = health;
-            break;
-          case SetHealthAction.Up:
-            Health += health;
-            if (Health > MaxHealth) Health = MaxHealth;
-            break;
-          case SetHealthAction.Down:
-            Health -= health;
-            if (Health < 0) Health = -1;
-            break;
-        }
-      }
-
-      public void SetExp(double exp, SetExpAction type = SetExpAction.Set)
+      public void SetExp(double exp, ExpAction type = ExpAction.Set)
       {
         switch (type)
         {
-          case SetExpAction.Set:
+          case ExpAction.Set:
             Exp = exp;
             break;
-          case SetExpAction.Up:
+          case ExpAction.Up:
             Exp += exp;
             break;
         }
@@ -163,6 +141,55 @@ namespace CGamza.Entity.Pet
     {
       var up = Math.Pow(Info.LevelCoe, Info.Level + 1);
       return up - Info.Exp;
-    }    
+    }
+
+    public void Heal(double health)
+    {
+      var result = Info.Health + health;
+      Info.Health = Math.Min(result, Info.MaxHealth);
+    }
+
+    public void DealDmg(double damage, DmgType dmgType)
+    {
+      switch (dmgType)
+      {
+        case DmgType.EXECUTION:
+          Info.Health  = -1;
+          break;
+        case DmgType.TRUE_DAMAGE:
+          Info.Health -= damage;
+          break;
+        case DmgType.ATTACK_DAMAGE:
+          var dmg = damage * (1 - Info.AdEndur / 10 / 100);
+          Info.Health -= dmg;
+          break;
+        case DmgType.ABILITY_POWER:
+          var d = damage * (1 - Info.ApEndur / 10 / 100);
+          Info.Health -= d;
+          break;
+      }
+    }
+
+    public void SetHealth(double health, HpAction type = HpAction.Set)
+    {
+      // 방어력의 10분의 1을 퍼센트로 계산
+
+      switch (type)
+      {
+        case HpAction.Set:
+          if (health > Info.MaxHealth) Info.Health = Info.MaxHealth;
+          else if (health < 0) Info.Health = -1;
+          else Info.Health = health;
+          break;
+        case HpAction.Up:
+          Info.Health += health;
+          if (Info.Health > Info.MaxHealth) Info.Health = Info.MaxHealth;
+          break;
+        case HpAction.Down:
+          Info.Health -= health;
+          if (Info.Health < 0) Info.Health = -1;
+          break;
+      }
+    }
   }
 }
