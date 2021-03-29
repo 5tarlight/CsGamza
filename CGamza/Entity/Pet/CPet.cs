@@ -85,6 +85,13 @@ namespace CGamza.Entity.Pet
     public EntityType Type { get; }
     public EntityType? SecondaryType { get; }
     public string NickName { get; set; }
+    public bool IsDead
+    {
+      get
+      {
+        return Info.Health <= 0;
+      }
+    }
     
     public SSkill[] Skills { get; }
 
