@@ -1,4 +1,5 @@
 using System;
+using CGamza.Battle;
 using CGamza.Pet;
 
 namespace CGamza.Entity
@@ -88,22 +89,22 @@ namespace CGamza.Entity
       Health = Math.Min(result, MaxHealth);
     }
 
-    public void DealDmg(double damage, DmgType dmgType)
+    public void DealDmg(Damage damage)
     {
-      switch (dmgType)
+      switch (damage.DmgType)
       {
         case DmgType.EXECUTION:
           Health  = -1;
           break;
         case DmgType.TRUE_DAMAGE:
-          Health -= damage;
+          Health -= damage.Dmg;
           break;
         case DmgType.ATTACK_DAMAGE:
-          var dmg = damage * (1 - AdEndur / 10 / 100);
+          var dmg = damage.Dmg * (1 - AdEndur / 10 / 100);
           Health -= dmg;
           break;
         case DmgType.ABILITY_POWER:
-          var d = damage * (1 - ApEndur / 10 / 100);
+          var d = damage.Dmg * (1 - ApEndur / 10 / 100);
           Health -= d;
           break;
       }

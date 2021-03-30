@@ -1,5 +1,7 @@
 using System;
+using CGamza.Battle;
 using CGamza.Entity.Monster;
+using CGamza.Pet;
 
 namespace CGamza.Entity.Pet.Skill
 {
@@ -11,7 +13,16 @@ namespace CGamza.Entity.Pet.Skill
 
     public override void OnUse(CPet user, CMonster opponent)
     {
-      // TODO
+      var dmg = BattleManager.CalDamage(
+        this.Damage,
+        EntityTypeExtension.CheckCompacity(user.Type, opponent.Type),
+        user.Info.AdAtk,
+        user.Info.ApAtk,
+        DmgType.ATTACK_DAMAGE
+      );
+
+      opponent.Info.DealDmg(dmg);
+      this.Point--;
     }
   }
 }
