@@ -78,60 +78,14 @@ namespace CGamza.Entity.Pet
       return up - Info.Exp;
     }
 
-    public void Heal(double health)
-    {
-      var result = Info.Health + health;
-      Info.Health = Math.Min(result, Info.MaxHealth);
-    }
-
-    public void DealDmg(double damage, DmgType dmgType)
-    {
-      switch (dmgType)
-      {
-        case DmgType.EXECUTION:
-          Info.Health  = -1;
-          break;
-        case DmgType.TRUE_DAMAGE:
-          Info.Health -= damage;
-          break;
-        case DmgType.ATTACK_DAMAGE:
-          var dmg = damage * (1 - Info.AdEndur / 10 / 100);
-          Info.Health -= dmg;
-          break;
-        case DmgType.ABILITY_POWER:
-          var d = damage * (1 - Info.ApEndur / 10 / 100);
-          Info.Health -= d;
-          break;
-      }
-    }
-
-    public void SetHealth(double health, HpAction type = HpAction.Set)
-    {
-      switch (type)
-      {
-        case HpAction.Set:
-          if (health > Info.MaxHealth) Info.Health = Info.MaxHealth;
-          else if (health < 0) Info.Health = -1;
-          else Info.Health = health;
-          break;
-        case HpAction.Up:
-          Info.Health += health;
-          if (Info.Health > Info.MaxHealth) Info.Health = Info.MaxHealth;
-          break;
-        case HpAction.Down:
-          Info.Health -= health;
-          if (Info.Health < 0) Info.Health = -1;
-          break;
-      }
-    }
-
     public override string ToString()
     {
       return $"{Name}\n"
         + $"Lv. {Info.Level}\n"
+        + $"다음 레벨까지 ${Math.Ceiling(GetNeedExpForNextLvl())}"
         + "\n"
         // + $"공격력 : "
-        + $"방어력 : {Info.AdEndur} {Info.ApEndur}";
+        + $"방어력 : {Math.Floor(Info.AdEndur)} {Math.Floor(Info.ApEndur)}";
     }
   }
 }

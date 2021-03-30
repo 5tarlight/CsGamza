@@ -7,9 +7,11 @@ namespace CGamza.Entity
   public class EntityInfo
   {
     public double Health { get; set; }
-    public double MaxHealth { get; private set; }
+    public double MaxHealth { get; internal set; }
     public double AdEndur { get; set; } // 물리
     public double ApEndur { get; set; } // 마법
+    public double AdAtk { get; set; }
+    public double ApAtk { get; set; }
     public double Exp { get; set; }
     public int Level { get; set; }
 
@@ -17,6 +19,8 @@ namespace CGamza.Entity
     internal double HealthCoe;
     internal double AdDurCoe;
     internal double ApDurCoe;
+    internal double AdAtkCoe;
+    internal double ApAtkCoe;
     internal double BaseHealth;
 
     public EntityInfo(
@@ -26,6 +30,8 @@ namespace CGamza.Entity
       double hpCoe = 1.075,
       double addCoe = 1.2,
       double apdCoe = 1.05,
+      double adtCoe = 1.2,
+      double aptCoe = 1.05,
       double baseHp = 100
     )
     {
@@ -36,6 +42,8 @@ namespace CGamza.Entity
       HealthCoe = hpCoe;
       AdDurCoe = addCoe;
       ApDurCoe = apdCoe;
+      AdAtkCoe = adtCoe;
+      ApAtkCoe = aptCoe;
       BaseHealth = baseHp;
 
       CalculateLevel();
@@ -60,18 +68,45 @@ namespace CGamza.Entity
       ApplyLevel();
     }
 
-    private void ApplyLevel()
+    internal void ApplyLevel()
     {
       MaxHealth = Math.Pow(HealthCoe, Level) + BaseHealth;
     }
 
-    private void CalculateLevel()
+    internal void CalculateLevel()
     {
       int level = 0;
       while (Math.Pow(LevelCoe, level) < Exp)
         level++;
 
       Level = level;
+    }
+
+    public void Heal(double health)
+    {
+      var result = Health + health;
+      Health = Math.Min(result, MaxHealth);
+    }
+
+    public void DealDmg(double damage, DmgType dmgType)
+    {
+      switch (dmgType)
+      {
+        case DmgType.EXECUTION:
+          Health  = -1;
+          break;
+        case DmgType.TRUE_DAMAGE:
+          Health -= damage;
+          break;
+        case DmgType.ATTACK_DAMAGE:
+          var dmg = damage * (1 - AdEndur / 10 / 100);
+          Health -= dmg;
+          break;
+        case DmgType.ABILITY_POWER:
+          var d = damage * (1 - ApEndur / 10 / 100);
+          Health -= d;
+          break;
+      }
     }
   }
 }
