@@ -21,5 +21,25 @@ namespace CGamza.Terrain.Road
       var rm = new RoadMonster(monster, frequency);
       Monsters.Add(rm);
     }
+
+    public CMonster SummonMonster()
+    {
+      var spawned = false;
+
+      do
+      {
+        var random = new Random();
+        var index = random.Next(0, Monsters.Count);
+        var prop = random.Next(0, 100);
+        if (prop <= Monsters[index].frequency * 100)
+        {
+          spawned = true;
+          return Monsters[index].monster.GetInstance();
+        }
+      }
+      while (!spawned);
+
+      return null;
+    }
   }
 }

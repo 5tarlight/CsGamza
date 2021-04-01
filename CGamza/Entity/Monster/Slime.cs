@@ -10,5 +10,10 @@ namespace CGamza.Entity.Monster
       var info = new EntityInfo(5, 3, 1, 1, 1, 0.9, 1.25, 1, 75);
       Info = info;
     }
+
+    public override Slime GetInstance()
+    {
+      return new Slime();
+    }
   }
 }

@@ -3,7 +3,7 @@ using System;
 namespace CGamza.Entity.Monster
 {
   [Serializable]
-  public class CMonster
+  public abstract class CMonster
   {
     public string Name { get; }
     public EntityType Type { get; }
@@ -26,5 +26,7 @@ namespace CGamza.Entity.Monster
         // + $"공격력 : {Info.AD1"
         + $"방어력 : {Info.AdEndur} {Info.ApEndur}";
     }
+
+    public abstract CMonster GetInstance();
   }
 }

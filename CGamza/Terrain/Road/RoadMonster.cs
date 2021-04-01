@@ -4,8 +4,8 @@ namespace CGamza.Terrain.Road
 {
   public class RoadMonster
   {
-    CMonster monster;
-    double frequency;
+    public CMonster monster;
+    public double frequency;
 
     public RoadMonster(CMonster monster, double frequency)
     {
