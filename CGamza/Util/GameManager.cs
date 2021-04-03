@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using CGamza.Battle;
 using CGamza.Entity.Pet;
 using CGamza.Inventory;
 using CGamza.Player;
+using CGamza.Terrain.Road;
 using CGamza.Terrain.Town;
 
 namespace CGamza.Util
@@ -128,7 +130,8 @@ namespace CGamza.Util
           PetManger.DisplayPet();
           break;
         case 6:
-          PlayerManager.CurrentPlayer.Location.Move(Towns.azaleaVillage);
+          var monster = Roads.beginnersForest.SummonMonster();
+          BattleManager.StartBattle(monster);
           break;
         case 7:
           Environment.Exit(0);

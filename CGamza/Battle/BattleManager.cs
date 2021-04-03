@@ -1,6 +1,12 @@
+using System;
+using System.Collections.Generic;
 using CGamza.Entity;
+using CGamza.Entity.Monster;
+using CGamza.Entity.Pet;
 using CGamza.Entity.Pet.Skill;
 using CGamza.Pet;
+using CGamza.Player;
+using CGamza.Util;
 
 namespace CGamza.Battle
 {
@@ -47,9 +53,30 @@ namespace CGamza.Battle
       }
     }
 
-    public static void StartBattle()
+    public static void StartBattle(CMonster opponent)
     {
+      var random = new Random();
+      var firstAtk = random.Next(0, 2) == 0 ? true : false;
 
+      Console.Clear();
+      ConsoleUtil.WriteColor(opponent.ToString());
+      ConsoleUtil.Pause();
+
+      var pet = SelectPet();
+    }
+
+    private static int SelectPet()
+    {
+      var pets = PlayerManager.CurrentPlayer.Pets;
+      var q = new List<SelectableQuestion>();
+
+      foreach (var p in pets)
+      {
+        if (p == null) continue;
+        q.Add(new SelectableQuestion(p.Name));
+      }
+
+      return ConsoleUtil.AskSelectableQuestion("펫을 선택해 주세요.", q);
     }
   }
 }

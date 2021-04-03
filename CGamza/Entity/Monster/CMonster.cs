@@ -23,8 +23,8 @@ namespace CGamza.Entity.Monster
         + $"Lv.{Info.Level}\n"
         + "\n"
         + $"채력 : {Info.Health} / {Info.MaxHealth}\n"
-        // + $"공격력 : {Info.AD1"
-        + $"방어력 : {Info.AdEndur} {Info.ApEndur}";
+        + $"공격력 : {Math.Floor(Info.AdAtk)} | {Math.Floor(Info.ApAtk)}\n"
+        + $"방어력 : {Math.Floor(Info.AdEndur)} | {Math.Floor(Info.ApEndur)}";
     }
 
     public abstract CMonster GetInstance();

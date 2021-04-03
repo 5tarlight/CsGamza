@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using CGamza.Entity.Pet.Skill;
-using CGamza.Pet;
 using CGamza.Util;
 
 namespace CGamza.Entity.Pet
@@ -82,10 +81,10 @@ namespace CGamza.Entity.Pet
     {
       return $"{Name}\n"
         + $"Lv. {Info.Level}\n"
-        + $"다음 레벨까지 ${Math.Ceiling(GetNeedExpForNextLvl())}"
+        + $"다음 레벨까지 {Math.Ceiling(GetNeedExpForNextLvl())}"
         + "\n"
-        // + $"공격력 : "
-        + $"방어력 : {Math.Floor(Info.AdEndur)} {Math.Floor(Info.ApEndur)}";
+        + $"공격력 : {Math.Floor(Info.AdAtk)} | {Math.Floor(Info.ApAtk)}"
+        + $"방어력 : {Math.Floor(Info.AdEndur)} | {Math.Floor(Info.ApEndur)}";
     }
   }
 }
