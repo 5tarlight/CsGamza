@@ -2,6 +2,13 @@ const fs = require('fs')
 const users = []
 
 fs.readdir('./data', (err, files) => {
+  if (!files)
+  {
+    console.log('No player found')
+    return
+  }
+    
+
   files.forEach(f => {
     if (fs.lstatSync(`./data/${f}`).isDirectory())
       users.push({

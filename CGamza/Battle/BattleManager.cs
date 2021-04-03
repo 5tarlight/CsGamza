@@ -46,5 +46,10 @@ namespace CGamza.Battle
           return new Damage(src, dmgType);
       }
     }
+
+    public static void StartBattle()
+    {
+
+    }
   }
 }
