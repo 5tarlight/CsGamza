@@ -63,6 +63,29 @@ namespace CGamza.Battle
       ConsoleUtil.Pause();
 
       var pet = SelectPet();
+      ShowRound(pet, opponent);
+
+      if (firstAtk)
+      {
+        ConsoleUtil.WriteColor("승리했습니다.");
+        PlayerManager.CurrentPlayer.Pets[pet].Info.SetExp(2, ExpAction.Up);
+        ConsoleUtil.Pause();
+      }
+      else
+      {
+        ConsoleUtil.WriteColor("패배했습니다.");
+        ConsoleUtil.Pause();
+      }
+    }
+
+    private static void ShowRound(int pet, CMonster opponent)
+    {
+      Console.Clear();
+      ConsoleUtil.WriteColor(opponent.ToString());
+      ConsoleUtil.WriteColor("");
+      ConsoleUtil.WriteColor("");
+      ConsoleUtil.WriteColor(PlayerManager.CurrentPlayer.Pets[pet].ToString());
+      ConsoleUtil.Pause();
     }
 
     private static int SelectPet()
