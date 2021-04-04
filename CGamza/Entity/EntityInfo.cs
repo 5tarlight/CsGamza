@@ -72,6 +72,10 @@ namespace CGamza.Entity
     internal void ApplyLevel()
     {
       MaxHealth = Math.Pow(HealthCoe, Level) + BaseHealth;
+      AdEndur = Math.Pow(AdDurCoe, Level);
+      ApEndur = Math.Pow(ApDurCoe, Level);
+      AdAtk = Math.Pow(AdAtkCoe, Level);
+      ApAtk = Math.Pow(ApAtkCoe, Level);
     }
 
     internal void CalculateLevel()

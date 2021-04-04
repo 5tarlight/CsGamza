@@ -83,7 +83,7 @@ namespace CGamza.Entity.Pet
         + $"Lv. {Info.Level}\n"
         + $"다음 레벨까지 {Math.Ceiling(GetNeedExpForNextLvl())}"
         + "\n"
-        + $"공격력 : {Math.Floor(Info.AdAtk)} | {Math.Floor(Info.ApAtk)}"
+        + $"공격력 : {Math.Floor(Info.AdAtk)} | {Math.Floor(Info.ApAtk)}\n"
         + $"방어력 : {Math.Floor(Info.AdEndur)} | {Math.Floor(Info.ApEndur)}";
     }
   }
