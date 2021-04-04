@@ -74,7 +74,7 @@ namespace CGamza.Entity.Pet
     public double GetNeedExpForNextLvl()
     {
       var up = Math.Pow(Info.LevelCoe, Info.Level + 1);
-      return up - Info.Exp;
+      return Math.Ceiling(up - Info.Exp);
     }
 
     public override string ToString()

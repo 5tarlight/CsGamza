@@ -63,6 +63,9 @@ namespace CGamza.Battle
       ConsoleUtil.Pause();
 
       var pet = SelectPet();
+
+      if (pet == -1) return;
+
       ShowRound(pet, opponent);
 
       if (firstAtk)
@@ -91,6 +94,14 @@ namespace CGamza.Battle
     private static int SelectPet()
     {
       var pets = PlayerManager.CurrentPlayer.Pets;
+
+      if (pets.Length < 1)
+      {
+        ConsoleUtil.WriteColor("펫이 없습니다.");
+        ConsoleUtil.Pause();
+        return -1;
+      }
+
       var q = new List<SelectableQuestion>();
 
       foreach (var p in pets)
