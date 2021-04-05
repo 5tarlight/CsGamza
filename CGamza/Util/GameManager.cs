@@ -86,6 +86,7 @@ namespace CGamza.Util
         new SelectableQuestion("펫 추가하기"),
         new SelectableQuestion("펫쉘 확인하기"),
         new SelectableQuestion("모의전투"),
+        new SelectableQuestion("회복하기"),
         new SelectableQuestion("종료")
       };
       
@@ -134,6 +135,14 @@ namespace CGamza.Util
           BattleManager.StartBattle(monster);
           break;
         case 7:
+          foreach (var p in PlayerManager.CurrentPlayer.Pets)
+          {
+            if (p != null)
+              p.Info.Heal(9999);
+          }
+
+          break;
+        case 8:
           Environment.Exit(0);
           break;
       }
