@@ -1,5 +1,6 @@
 using System;
 using System.Text;
+using CGamza.Pet;
 
 namespace CGamza.Entity.Monster
 {
@@ -10,6 +11,7 @@ namespace CGamza.Entity.Monster
     public EntityType Type { get; }
     public EntityType? SecondaryType { get; }
     public EntityInfo Info { get; protected set; }
+    public DmgType AtkType { get; }
     public bool IsDead {
       get
       {
@@ -17,9 +19,10 @@ namespace CGamza.Entity.Monster
       }
     }
 
-    public CMonster(string name, EntityType type, EntityType? sec = null)
+    public CMonster(string name, DmgType dmgType, EntityType type, EntityType? sec = null)
     {
       Name = name;
+      AtkType = dmgType;
       Type = type;
       SecondaryType = sec;
     }
