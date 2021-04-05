@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using CGamza.Entity;
 using CGamza.Entity.Monster;
+using CGamza.Entity.Pet.Skill;
 using CGamza.Pet;
 using CGamza.Player;
 using CGamza.Util;
@@ -64,6 +65,7 @@ namespace CGamza.Battle
       ConsoleUtil.Pause();
 
       var pet = SelectPet();
+      if (pet == -1) return;
 
       do
       {
@@ -72,13 +74,35 @@ namespace CGamza.Battle
         Console.Clear();
         ShowRound(pet, opponent);
 
+        var action = SelectAction();
+        #nullable enable
+        SSkill? skill = null;
+
+        switch (action)
+        {
+          case 0:
+            skill = SelectSkill(pet);
+            break;
+          case 1:
+            break;
+          case 2:
+            break;
+        }
+
         if (firstAtk)
         {
-          opponent.Info.DealDmg(new Damage(99999, DmgType.ATTACK_DAMAGE));
+          if (action == 0)
+            PetAttack(pet, opponent, skill!);
+
+          if (opponent.IsDead) break;
+          MonsterAttack(pet, opponent);
         }
         else
         {
-          CurrentPlayer.Pets[pet].Info.DealDmg(new Damage(99999, DmgType.ATTACK_DAMAGE));
+          MonsterAttack(pet, opponent);
+          if (CurrentPlayer.Pets[pet].IsDead) return;
+          if (action == 0)
+            PetAttack(pet, opponent, skill!);
         }
       }
       while (!CurrentPlayer.Pets[pet].IsDead && !opponent.IsDead);
@@ -100,6 +124,83 @@ namespace CGamza.Battle
       }
     }
 
+    private static int SelectAction()
+    {
+      var q = new List<SelectableQuestion>()
+      {
+        new SelectableQuestion("공격하기"),
+        new SelectableQuestion("아이템 사용"),
+        new SelectableQuestion("펫 교체하기")
+      };
+
+      return ConsoleUtil.AskSelectableQuestion("무엇을 할까", q);
+    }
+
+    private static SSkill SelectSkill(int pet)
+    {
+      var q = new List<SelectableQuestion>();
+
+      foreach (var s in CurrentPlayer.Pets[pet].Skills)
+      {
+        if (s != null)
+          q.Add(new SelectableQuestion(s.Name));
+      }
+
+      var skill = ConsoleUtil.AskSelectableQuestion("스킬을 선택하세요", q);
+      var name = q[skill].ToString();
+
+      foreach (var s in CurrentPlayer.Pets[pet].Skills)
+      {
+        if (s != null && s.Name == name)
+          return s;
+      }
+
+      return null!;
+    }
+
+    private static void MonsterAttack(int pet, CMonster monster)
+    {
+      var before = CurrentPlayer.Pets[pet].Info.Health;
+
+      var dmg = monster.AtkType == DmgType.ATTACK_DAMAGE
+        ? monster.Info.AdAtk
+        : monster.Info.ApAtk;
+      
+      var damage = new Damage(dmg * 50, monster.AtkType);
+      CurrentPlayer.Pets[pet].Info.DealDmg(damage);
+
+      var after = CurrentPlayer.Pets[pet].Info.Health;
+
+      ConsoleUtil.WriteColor($"{before - after}의 피해를 입었다.");
+      ConsoleUtil.Pause();
+    }
+    
+    private static void PetAttack(int pet, CMonster monster, SSkill skill)
+    {
+      ConsoleUtil.WriteColor($"{CurrentPlayer.Pets[pet].Name}의 {skill.Name}");
+
+      if (skill.SkillType == SkillType.CHANGE)
+      {
+
+      }
+      else
+      {
+        var comp = EntityTypeExtension.CheckCompacity(CurrentPlayer.Pets[pet].Type, monster.Type);
+        var dealCoe = GetCompCoe(comp);
+        var type = skill.SkillType == SkillType.PHYSICAL
+          ? DmgType.ATTACK_DAMAGE
+          : DmgType.ABILITY_POWER;
+        var damage = new Damage(skill.Damage, type);
+
+        var before = monster.Info.Health;
+        monster.Info.DealDmg(damage);
+        var after = monster.Info.Health;
+
+        ConsoleUtil.WriteColor($"{before - after}의 피해를 입혔다.");
+        ConsoleUtil.Pause();
+      }
+    }
+
     private static void ShowRound(int pet, CMonster opponent)
     {
       Console.Clear();
@@ -112,9 +213,9 @@ namespace CGamza.Battle
 
     private static int SelectPet()
     {
-      var pets = PlayerManager.CurrentPlayer.Pets;
+      var pets = CurrentPlayer.Pets;
 
-      if (pets.Length < 1)
+      if (CurrentPlayer.GetPetsCount() < 1)
       {
         ConsoleUtil.WriteColor("펫이 없습니다.");
         ConsoleUtil.Pause();
