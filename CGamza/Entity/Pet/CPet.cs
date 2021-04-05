@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
 using CGamza.Entity.Pet.Skill;
 using CGamza.Util;
 
@@ -79,12 +80,15 @@ namespace CGamza.Entity.Pet
 
     public override string ToString()
     {
-      return $"{Name}\n"
-        + $"Lv. {Info.Level}\n"
-        + $"다음 레벨까지 {Math.Ceiling(GetNeedExpForNextLvl())}"
-        + "\n"
-        + $"공격력 : {Math.Floor(Info.AdAtk)} | {Math.Floor(Info.ApAtk)}\n"
-        + $"방어력 : {Math.Floor(Info.AdEndur)} | {Math.Floor(Info.ApEndur)}";
+      var sb = new StringBuilder()
+        .Append($"{Name}\n")
+        .Append($"Lv. {Info.Level}\n")
+        .Append($"다음 레벨까지 {Math.Ceiling(GetNeedExpForNextLvl())}\n\n")
+        .Append($"채력 : {Math.Ceiling(Info.Health)} / {Math.Ceiling(Info.MaxHealth)}\n")
+        .Append($"공격력 : {Math.Floor(Info.AdAtk)} | {Math.Floor(Info.ApAtk)}\n")
+        .Append($"방어력 : {Math.Floor(Info.AdEndur)} | {Math.Floor(Info.ApEndur)}");
+
+      return sb.ToString();
     }
   }
 }

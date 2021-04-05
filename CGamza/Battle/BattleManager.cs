@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using CGamza.Entity;
 using CGamza.Entity.Monster;
-using CGamza.Entity.Pet;
-using CGamza.Entity.Pet.Skill;
 using CGamza.Pet;
 using CGamza.Player;
 using CGamza.Util;
+
+using static CGamza.Player.PlayerManager;
 
 namespace CGamza.Battle
 {
@@ -53,28 +53,47 @@ namespace CGamza.Battle
       }
     }
 
-    public static void StartBattle(CMonster opponent)
+    public static void StartBattle(CMonster opponent, double expCoe = 1.15)
     {
       var random = new Random();
       var firstAtk = random.Next(0, 2) == 0 ? true : false;
 
       Console.Clear();
+      ConsoleUtil.WriteColor("전투가 시작되었습니다.");
       ConsoleUtil.WriteColor(opponent.ToString());
       ConsoleUtil.Pause();
 
       var pet = SelectPet();
 
-      if (pet == -1) return;
+      do
+      {
+        if (pet == -1) return;
 
-      ShowRound(pet, opponent);
+        Console.Clear();
+        ShowRound(pet, opponent);
 
-      if (firstAtk)
+        if (firstAtk)
+        {
+          opponent.Info.DealDmg(new Damage(99999, DmgType.ATTACK_DAMAGE));
+        }
+        else
+        {
+          CurrentPlayer.Pets[pet].Info.DealDmg(new Damage(99999, DmgType.ATTACK_DAMAGE));
+        }
+      }
+      while (!CurrentPlayer.Pets[pet].IsDead && !opponent.IsDead);
+
+      if (opponent.IsDead)
       {
         ConsoleUtil.WriteColor("승리했습니다.");
-        PlayerManager.CurrentPlayer.Pets[pet].Info.SetExp(2, ExpAction.Up);
+
+        var exp = Math.Pow(expCoe, opponent.Info.Level - CurrentPlayer.Pets[pet].Info.Level);
+        CurrentPlayer.Pets[pet].Info.SetExp(exp, ExpAction.Up);
+        ConsoleUtil.WriteColor($"{Math.Ceiling(exp)} 경험치를 얻었습니다.");
+
         ConsoleUtil.Pause();
       }
-      else
+      else if (CurrentPlayer.Pets[pet].IsDead)
       {
         ConsoleUtil.WriteColor("패배했습니다.");
         ConsoleUtil.Pause();

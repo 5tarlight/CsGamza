@@ -7,6 +7,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using CGamza.Player;
 using CGamza.Util;
 using Colorify;
+using System.Text;
 
 namespace CGamza.Entity.Pet
 {
@@ -186,27 +187,30 @@ namespace CGamza.Entity.Pet
 
     public static string GetPetInfo(CPet pet)
     {
-      var msg = $"이름 : {pet.Name}\n";
+      Console.Clear();
 
-      msg += pet.SecondaryType is EntityType
-        ? $"{pet.Type.ToString()}, {pet.SecondaryType.ToString()}"
-        : pet.Type.ToString();
+      var msg = new StringBuilder()
+        .Append($"이름 : {pet.Name}\n");
       
-      msg += "\n"
-        + $"Lv. {pet.Info.Level}\n"
-        + $"채력 : {pet.Info.Health} / {pet.Info.MaxHealth}\n"
-        + $"경험치 : {pet.Info.Exp}\n"
-        + $"다음 레벨까지 {pet.GetNeedExpForNextLvl()}필요\n"
-        + "\n"
-        + "기술\n";
+      if (pet.SecondaryType is EntityType)
+        msg.Append($"{pet.Type.ToString()}, {pet.SecondaryType.ToString()}");
+      else
+        msg.Append(pet.Type.ToString());
+      
+      msg.Append("\n")
+        .Append($"Lv. {pet.Info.Level}\n")
+        .Append($"채력 : {Math.Ceiling(pet.Info.Health)} / {Math.Ceiling(pet.Info.MaxHealth)}\n")
+        .Append($"경험치 : {Math.Ceiling(pet.Info.Exp)}\n")
+        .Append($"다음 레벨까지 {Math.Ceiling(pet.GetNeedExpForNextLvl())}필요\n\n")
+        .Append("기술\n");
 
       foreach (var s in pet.Skills)
       {
         if (s != null)
-          msg += s.Name + "\n";
+          msg.Append(s.Name + "\n");
       }
 
-      return msg;
+      return msg.ToString();
     }
 
     public static void ShowPetInfo(CPet pet)

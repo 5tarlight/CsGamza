@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 
 namespace CGamza.Entity.Monster
 {
@@ -9,6 +10,12 @@ namespace CGamza.Entity.Monster
     public EntityType Type { get; }
     public EntityType? SecondaryType { get; }
     public EntityInfo Info { get; protected set; }
+    public bool IsDead {
+      get
+      {
+        return Info.Health <= 0;
+      }
+    }
 
     public CMonster(string name, EntityType type, EntityType? sec = null)
     {
@@ -19,12 +26,14 @@ namespace CGamza.Entity.Monster
 
     public override string ToString()
     {
-      return $"{Name}\n"
-        + $"Lv.{Info.Level}\n"
-        + "\n"
-        + $"채력 : {Info.Health} / {Info.MaxHealth}\n"
-        + $"공격력 : {Math.Floor(Info.AdAtk)} | {Math.Floor(Info.ApAtk)}\n"
-        + $"방어력 : {Math.Floor(Info.AdEndur)} | {Math.Floor(Info.ApEndur)}";
+      var sb = new StringBuilder()
+        .Append($"{Name}\n")
+        .Append($"Lv. {Info.Level}\n\n")
+        .Append($"채력 : {Math.Ceiling(Info.Health)} / {Math.Ceiling(Info.MaxHealth)}\n")
+        .Append($"공격력 : {Math.Floor(Info.AdAtk)} | {Math.Floor(Info.ApAtk)}\n")
+        .Append($"방어력 : {Math.Floor(Info.AdEndur)} | {Math.Floor(Info.ApEndur)}");
+
+      return sb.ToString();
     }
 
     public abstract CMonster GetInstance();

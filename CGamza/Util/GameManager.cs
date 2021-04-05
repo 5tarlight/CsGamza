@@ -85,7 +85,7 @@ namespace CGamza.Util
         new SelectableQuestion("펫 확인하기"),
         new SelectableQuestion("펫 추가하기"),
         new SelectableQuestion("펫쉘 확인하기"),
-        new SelectableQuestion("진달래마을로"),
+        new SelectableQuestion("모의전투"),
         new SelectableQuestion("종료")
       };
       
