@@ -6,25 +6,30 @@ namespace CGamza.Util
 {
   public class ConsoleUtil
   {
+    // The nuget package colorify console
     public static Format Colorify { get; set; }
     
+    // Show logo
     public static void DisplayLogo()
     {
       WriteColor("환영합니다.", Colors.txtSuccess);
     }
 
+    // Write console with color. Inline mode supported
     public static void WriteColor(string text, string color = Colors.txtDefault, bool isInline = false)
     {
       if (isInline) Colorify.Write(text, color);
       else Colorify.WriteLine(text, color);
     }
 
+    // Please press any key to continue
     public static void Pause()
     {
       WriteColor("계속하려면 아무키나 누르세요.");
       Console.ReadKey();
     }
     
+    // Ask vertical question
     public static int AskSelectableQuestion(string state, List<SelectableQuestion> questions)
     {
       var cursor = 0;

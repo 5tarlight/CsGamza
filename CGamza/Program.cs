@@ -6,6 +6,7 @@ using Colorify.UI;
 
 namespace CGamza
 {
+  // The main class
   class Program
   {
     static void Main(string[] args)

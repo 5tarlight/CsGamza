@@ -80,12 +80,12 @@ namespace CGamza.Battle
 
         switch (action)
         {
-          case 0:
+          case 0: // Attack
             skill = SelectSkill(pet);
             break;
-          case 1:
+          case 1: // Use Item
             break;
-          case 2:
+          case 2: // Swap Pet
             break;
         }
 
