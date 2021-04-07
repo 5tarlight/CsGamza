@@ -135,12 +135,7 @@ namespace CGamza.Util
           BattleManager.StartBattle(monster);
           break;
         case 7:
-          foreach (var p in PlayerManager.CurrentPlayer.Pets)
-          {
-            if (p != null)
-              p.Info.Heal(9999);
-          }
-
+          PlayerManager.CurrentPlayer.HealPets(false);
           break;
         case 8:
           Environment.Exit(0);

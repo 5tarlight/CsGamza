@@ -205,7 +205,7 @@ namespace CGamza.Entity.Pet
       foreach (var s in pet.Skills)
       {
         if (s != null)
-          msg.Append(s.Name + "\n");
+          msg.Append($"{s.Name} ({s.Point}/{s.MaxPoint})\n");
       }
 
       return msg.ToString();

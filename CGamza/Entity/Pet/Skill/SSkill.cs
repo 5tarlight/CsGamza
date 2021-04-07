@@ -8,6 +8,7 @@ namespace CGamza.Entity.Pet.Skill
   {
     public string Name { get; }
     public int Point { get; set; }
+    public int MaxPoint { get; }
     public SkillType SkillType { get; }
     public EntityType Type { get; }
     public double Damage { get; }
@@ -15,10 +16,16 @@ namespace CGamza.Entity.Pet.Skill
     public SSkill(string name, int point, SkillType skillType, EntityType type, double damage)
     {
       Name = name;
+      MaxPoint = point;
       Point = point;
       SkillType = skillType;
       Type = type;
       Damage = damage;
+    }
+
+    public void ResetPP()
+    {
+      Point = MaxPoint;
     }
 
     public abstract void OnUse(CPet user, CMonster opponent);

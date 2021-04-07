@@ -14,6 +14,13 @@ namespace CGamza.Player
     public long Money { get; set; }
     public Location Location { get; }
     public CPet[] Pets { get; }
+    public bool IsPetFull
+    {
+      get
+      {
+        return GetPetsCount() >= 4;
+      }
+    }
     public bool IsAllPetDead
     {
       get
@@ -29,7 +36,7 @@ namespace CGamza.Player
         return dead;
       }
     }
-    
+
     public GamzaPlayer() : this("unknown-user", "invalid-user")
     {
     }
@@ -53,20 +60,35 @@ namespace CGamza.Player
       return count;
     }
 
-    public bool IsPetFull()
-    {
-      return GetPetsCount() >= 4;
-    }
-
     public void AddPet(CPet pet)
     {
-      if (!IsPetFull())
+      if (!IsPetFull)
         Pets[GetPetsCount()] = pet;
       else
       {
         PetManger.AddPet(PlayerManager.CurrentPlayer.Name, pet);
         ConsoleUtil.WriteColor("펫쉘로 보내졌습니다.");
         ConsoleUtil.Pause();
+      }
+    }
+
+    public void HealPets(bool healPP = true)
+    {
+      foreach (var p in Pets)
+      {
+        if (p != null)
+        {
+          p.Info.Health = p.Info.MaxHealth;
+          
+          if (healPP)
+          {
+            foreach (var s in p.Skills)
+            {
+              if (s != null)
+                s.ResetPP();
+            }
+          }
+        }
       }
     }
   }

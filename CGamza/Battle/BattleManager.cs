@@ -160,23 +160,43 @@ namespace CGamza.Battle
     private static SSkill SelectSkill(int pet)
     {
       var q = new List<SelectableQuestion>();
+      var notAvail = true;
 
       foreach (var s in CurrentPlayer.Pets[pet].Skills)
       {
         if (s != null)
-          q.Add(new SelectableQuestion(s.Name));
+        {
+          var msg = s.Point <= 0 ? $"{s.Name} (x)" : $"{s.Name} ({s.Point}/{s.MaxPoint})";
+          q.Add(new SelectableQuestion(msg));
+
+          if (s.Point > 0 && notAvail) notAvail = false;
+        }
       }
+      
+      int skill;
+      SSkill ss = new STackle();
 
-      var skill = ConsoleUtil.AskSelectableQuestion("스킬을 선택하세요", q);
-      var name = q[skill].ToString();
-
-      foreach (var s in CurrentPlayer.Pets[pet].Skills)
+      if (notAvail)
       {
-        if (s != null && s.Name == name)
-          return s;
+        // TODO use random skill if pet doesn't have any available skill
+        ConsoleUtil.WriteColor("사용할 수 있는 스킬이 없습니다.");
+        return ss;
       }
 
-      return null!;
+      do
+      {
+        skill = ConsoleUtil.AskSelectableQuestion("스킬을 선택하세요", q);
+        var name = q[skill].ToString().Split(" ")[0].Trim();
+
+        foreach (var s in CurrentPlayer.Pets[pet].Skills)
+        {
+          if (s != null && s.Name == name)
+            ss = s;
+        }
+      }
+      while (ss.Point <= 0);
+      
+      return ss;
     }
 
     private static void MonsterAttack(int pet, CMonster monster)
@@ -200,6 +220,7 @@ namespace CGamza.Battle
     private static void PetAttack(int pet, CMonster monster, SSkill skill)
     {
       ConsoleUtil.WriteColor($"{CurrentPlayer.Pets[pet].Name}의 {skill.Name}");
+      skill.Point--;
 
       if (skill.SkillType == SkillType.CHANGE)
       {
