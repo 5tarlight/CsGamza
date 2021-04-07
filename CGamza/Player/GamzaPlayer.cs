@@ -14,7 +14,22 @@ namespace CGamza.Player
     public long Money { get; set; }
     public Location Location { get; }
     public CPet[] Pets { get; }
+    public bool IsAllPetDead
+    {
+      get
+      {
+        var dead = true;
 
+        foreach (var p in Pets)
+        {
+          if (p != null && !p.IsDead)
+            dead = false;
+        }
+
+        return dead;
+      }
+    }
+    
     public GamzaPlayer() : this("unknown-user", "invalid-user")
     {
     }

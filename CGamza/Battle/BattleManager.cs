@@ -69,7 +69,17 @@ namespace CGamza.Battle
 
       do
       {
-        if (pet == -1) return;
+        if (CurrentPlayer.Pets[pet].IsDead)
+        {
+          int switched;
+          do
+          {
+            switched = SelectPet();
+          }
+          while (CurrentPlayer.Pets[switched].IsDead);
+
+          pet = switched;
+        }
 
         Console.Clear();
         ShowRound(pet, opponent);
@@ -90,7 +100,8 @@ namespace CGamza.Battle
             do
             {
               switched = SelectPet();  
-            } while (pet == switched);
+            }
+            while (pet == switched);
             
             pet = switched;
 
@@ -115,7 +126,7 @@ namespace CGamza.Battle
             PetAttack(pet, opponent, skill!);
         }
       }
-      while (!CurrentPlayer.Pets[pet].IsDead && !opponent.IsDead);
+      while (!CurrentPlayer.IsAllPetDead && !opponent.IsDead);
 
       if (opponent.IsDead)
       {
@@ -127,7 +138,7 @@ namespace CGamza.Battle
 
         ConsoleUtil.Pause();
       }
-      else if (CurrentPlayer.Pets[pet].IsDead)
+      else if (CurrentPlayer.IsAllPetDead)
       {
         ConsoleUtil.WriteColor("패배했습니다.");
         ConsoleUtil.Pause();
@@ -238,7 +249,8 @@ namespace CGamza.Battle
       foreach (var p in pets)
       {
         if (p == null) continue;
-        q.Add(new SelectableQuestion(p.Name));
+        var msg = p.IsDead ? $"{p.Name} (x)" : p.Name;
+        q.Add(new SelectableQuestion(msg));
       }
 
       return ConsoleUtil.AskSelectableQuestion("펫을 선택해 주세요.", q);
