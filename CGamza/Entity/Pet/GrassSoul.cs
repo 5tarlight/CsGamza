@@ -6,7 +6,7 @@ namespace CGamza.Entity.Pet
   [Serializable]
   public class GrassSoul : CPet
   {
-    public GrassSoul() : base("풀의 정령", EntityType.FIRE)
+    public GrassSoul() : base("풀의 정령", EntityType.GRASS)
     {
       var info = new EntityInfo(20, 20, 1.22, 1.05, 1.18, 1, 1.1, 1, 105);
       base.Info = info;
