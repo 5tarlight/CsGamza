@@ -86,6 +86,13 @@ namespace CGamza.Battle
           case 1: // Use Item
             break;
           case 2: // Swap Pet
+            int switched;
+            do
+            {
+              switched = SelectPet();  
+            } while (pet == switched);
+            
+            pet = switched;
             break;
         }
 
@@ -171,7 +178,7 @@ namespace CGamza.Battle
 
       var after = CurrentPlayer.Pets[pet].Info.Health;
 
-      ConsoleUtil.WriteColor($"{before - after}의 피해를 입었다.");
+      ConsoleUtil.WriteColor($"{CurrentPlayer.Pets[pet].Name}은 {before - after}의 피해를 입었다.");
       ConsoleUtil.Pause();
     }
     
