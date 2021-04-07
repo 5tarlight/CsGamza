@@ -93,6 +93,9 @@ namespace CGamza.Battle
             } while (pet == switched);
             
             pet = switched;
+
+            ConsoleUtil.WriteColor($"펫을 {CurrentPlayer.Pets[switched].Name}으로 교체했습니다.");
+            ConsoleUtil.Pause(true);
             break;
         }
 
@@ -167,6 +170,7 @@ namespace CGamza.Battle
 
     private static void MonsterAttack(int pet, CMonster monster)
     {
+      ConsoleUtil.WriteColor($"{monster.Name}의 공격");
       var before = CurrentPlayer.Pets[pet].Info.Health;
 
       var dmg = monster.AtkType == DmgType.ATTACK_DAMAGE
@@ -179,7 +183,7 @@ namespace CGamza.Battle
       var after = CurrentPlayer.Pets[pet].Info.Health;
 
       ConsoleUtil.WriteColor($"{CurrentPlayer.Pets[pet].Name}은 {before - after}의 피해를 입었다.");
-      ConsoleUtil.Pause();
+      ConsoleUtil.Pause(true);
     }
     
     private static void PetAttack(int pet, CMonster monster, SSkill skill)
@@ -188,7 +192,7 @@ namespace CGamza.Battle
 
       if (skill.SkillType == SkillType.CHANGE)
       {
-
+        // TODO
       }
       else
       {
@@ -203,8 +207,8 @@ namespace CGamza.Battle
         monster.Info.DealDmg(damage);
         var after = monster.Info.Health;
 
-        ConsoleUtil.WriteColor($"{before - after}의 피해를 입혔다.");
-        ConsoleUtil.Pause();
+        ConsoleUtil.WriteColor($"{monster.Name}에게 {before - after}의 피해를 입혔다.");
+        ConsoleUtil.Pause(true);
       }
     }
 
@@ -225,7 +229,7 @@ namespace CGamza.Battle
       if (CurrentPlayer.GetPetsCount() < 1)
       {
         ConsoleUtil.WriteColor("펫이 없습니다.");
-        ConsoleUtil.Pause();
+        ConsoleUtil.Pause(true);
         return -1;
       }
 

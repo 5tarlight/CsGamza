@@ -23,9 +23,10 @@ namespace CGamza.Util
     }
 
     // Please press any key to continue
-    public static void Pause()
+    public static void Pause(bool notVisible = false)
     {
-      WriteColor("계속하려면 아무키나 누르세요.");
+      if (!notVisible)
+        WriteColor("계속하려면 아무키나 누르세요.");
       Console.ReadKey();
     }
     
