@@ -131,14 +131,21 @@ namespace CGamza.Util
       }
     }
 
-    public static string AskLine(string question, Func<string, bool> check, bool isInline = false)
+    #nullable enable
+    public static string AskLine(string question, Func<string, bool>? check, bool isInline = false)
     {
       string result;
-      do
+
+      if (check == null)
       {
         result = AskLine(question, isInline);
       }
-      while (!check(result));
+      else
+      {
+        do
+          result = AskLine(question, isInline);
+        while (!check(result));
+      }
 
       return result;
     }

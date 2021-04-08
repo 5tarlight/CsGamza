@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using CGamza.Battle;
 using CGamza.Entity.Pet;
 using CGamza.Inventory;
 using CGamza.Player;
 using CGamza.Terrain.Road;
-using CGamza.Terrain.Town;
 
 namespace CGamza.Util
 {
@@ -17,6 +17,7 @@ namespace CGamza.Util
       ConsoleUtil.WriteColor("새로운 캐릭터를 생성합니다.");
 
       Func<string, bool> checkNull = str => {
+        var reg = new Regex("^[a-zA-Z0-9]*$");
         if (
           str == null ||
           str.Trim() == "" ||
@@ -28,7 +29,8 @@ namespace CGamza.Util
           str.IndexOf(":") != -1 ||
           str.IndexOf("*") != -1 ||
           str.IndexOf("?") != -1 ||
-          str.IndexOf("\"") != -1
+          str.IndexOf("\"") != -1 ||
+          !reg.IsMatch(str)
         )
           return false;
         else
@@ -36,7 +38,7 @@ namespace CGamza.Util
       };
 
       var name = ConsoleUtil.AskLine("이름", checkNull, true);
-      var profile = ConsoleUtil.AskLine("프로필 설명", checkNull, true);
+      var profile = ConsoleUtil.AskLine("프로필 설명", null, true);
 
       var player = new GamzaPlayer(name, profile);
       PlayerManager.CreatePlayerFile(player);
