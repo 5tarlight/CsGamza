@@ -2,12 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using CGamza.Entity.Pet.Skill;
+using CGamza.Item;
 using CGamza.Util;
 
 namespace CGamza.Entity.Pet
 {
   [Serializable]
-  public class CPet
+  public class CPet : IItemTarget
   {
     public string Name { get; }
     public EntityType Type { get; }

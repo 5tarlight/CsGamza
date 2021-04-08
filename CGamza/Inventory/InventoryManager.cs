@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using CGamza.Battle;
 using CGamza.Item;
 using CGamza.Player;
 using CGamza.Util;
@@ -197,15 +198,19 @@ namespace CGamza.Inventory
     {
       if (item.Item is IUsableItem)
       {
+        var result = true;
         var usable = item.Item as IUsableItem;
 
         if (usable == null) return false;
 
+        var target = BattleManager.SelectPet();
+        if (target == -1) return false;  
+
         for (var i = 0; i < count; i++)
-          usable.onUse(PlayerManager.CurrentPlayer);
+          result = result && usable.OnUse(PlayerManager.CurrentPlayer.Pets[target]);
         
         PlayerManager.CurrentInventory.MinusItem(item.Item, count);
-        return true;
+        return result;
       }
 
       return false;

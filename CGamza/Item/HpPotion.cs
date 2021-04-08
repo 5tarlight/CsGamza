@@ -1,4 +1,5 @@
 ﻿using System;
+using CGamza.Entity.Pet;
 using CGamza.Player;
 
 namespace CGamza.Item
@@ -10,9 +11,16 @@ namespace CGamza.Item
     {
     }
     
-    public void onUse(GamzaPlayer user)
+    public bool OnUse(IItemTarget user)
     {
-      // user.SetHealth(50, SetHealthAction.Up);
+      if (user is CPet)
+      {
+        var target = user as CPet;
+        target.Info.Heal(50);
+        return true;
+      }
+
+      return false;
     }
   }
 }

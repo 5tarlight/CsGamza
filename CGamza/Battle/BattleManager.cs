@@ -254,7 +254,7 @@ namespace CGamza.Battle
       ConsoleUtil.Pause();
     }
 
-    private static int SelectPet()
+    public static int SelectPet()
     {
       var pets = CurrentPlayer.Pets;
 

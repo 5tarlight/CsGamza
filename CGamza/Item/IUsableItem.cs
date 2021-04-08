@@ -1,9 +1,7 @@
-﻿using CGamza.Player;
-
-namespace CGamza.Item
+﻿namespace CGamza.Item
 {
   public interface IUsableItem
   {
-    public void onUse(GamzaPlayer user);
+    public bool OnUse(IItemTarget user);
   }
 }
