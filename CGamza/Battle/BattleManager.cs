@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using CGamza.Entity;
 using CGamza.Entity.Monster;
@@ -8,6 +9,7 @@ using CGamza.Player;
 using CGamza.Util;
 
 using static CGamza.Player.PlayerManager;
+using CGamza.Item;
 
 namespace CGamza.Battle
 {
@@ -84,7 +86,22 @@ namespace CGamza.Battle
         Console.Clear();
         ShowRound(pet, opponent);
 
-        var action = SelectAction();
+        int action = -1;
+        while (true)
+        {
+          action = SelectAction();
+
+          if (
+            (action == 1 && CurrentInventory.Items.Count < 1) ||
+            (action == 2 && CurrentPlayer.GetPetsCount() < 2)
+          )
+          {
+            ConsoleUtil.WriteColor("불가능한 선택입니다.");
+            ConsoleUtil.Pause();
+          }
+          else break;
+        }
+
         #nullable enable
         SSkill? skill = null;
 
@@ -94,6 +111,27 @@ namespace CGamza.Battle
             skill = SelectSkill(pet);
             break;
           case 1: // Use Item
+            var result = false;
+            do
+            {
+              var item = SelectItem();
+              var usable = CurrentInventory.Items[item].Item as IUsableItem;
+              result = usable!.OnUse(CurrentPlayer.Pets[pet], opponent);
+              CurrentInventory.MinusItem(CurrentInventory.Items[item].Item, 1);
+
+              if (!result)
+              {
+                ConsoleUtil.WriteColor("아이템 사용에 실패했습니다.");
+                ConsoleUtil.Pause();
+              }
+              else
+              {
+                ConsoleUtil.WriteColor("아이템을 사용했습니다.");
+                ConsoleUtil.Pause();
+              }
+            }
+            while (!result);
+            
             break;
           case 2: // Swap Pet
             int switched;
@@ -143,6 +181,27 @@ namespace CGamza.Battle
         ConsoleUtil.WriteColor("패배했습니다.");
         ConsoleUtil.Pause();
       }
+    }
+
+    private static int SelectItem()
+    {
+      var usable = (from item in CurrentInventory.Items
+        where item.Item is IUsableItem
+        select item).ToList();
+
+      if (usable.Count < 1)
+      {
+        ConsoleUtil.WriteColor("아이템이 없습니다.");
+        ConsoleUtil.Pause();
+        return -1;
+      }
+
+      var q = from item in usable
+        select new SelectableQuestion(item.Item.Name);
+
+      var i = ConsoleUtil.AskSelectableQuestion("아이템", q.ToList());
+
+      return CurrentInventory.Items.FindIndex(0, 1, ii => ii.Item.Name == usable[i].Item.Name);
     }
 
     private static int SelectAction()

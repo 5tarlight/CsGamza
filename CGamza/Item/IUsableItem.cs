@@ -2,6 +2,11 @@
 {
   public interface IUsableItem
   {
-    public bool OnUse(IItemTarget user);
+    public bool SelfUsable
+    {
+      get { return false; }
+    }
+
+    public bool OnUse(IItemTarget user, IItemTarget target);
   }
 }

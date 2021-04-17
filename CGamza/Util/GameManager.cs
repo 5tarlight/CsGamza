@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 using CGamza.Battle;
 using CGamza.Entity.Pet;
 using CGamza.Inventory;
+using CGamza.Item;
 using CGamza.Player;
 using CGamza.Terrain.Road;
 
@@ -89,6 +90,7 @@ namespace CGamza.Util
         new SelectableQuestion("펫쉘 확인하기"),
         new SelectableQuestion("모의전투"),
         new SelectableQuestion("회복하기"),
+        new SelectableQuestion("HP포션 받기"),
         new SelectableQuestion("종료")
       };
       
@@ -140,6 +142,9 @@ namespace CGamza.Util
           PlayerManager.CurrentPlayer.HealPets(false);
           break;
         case 8:
+          PlayerManager.CurrentInventory.AddItem(new HpPotion(), 1);
+          break;
+        case 9:
           Environment.Exit(0);
           break;
       }

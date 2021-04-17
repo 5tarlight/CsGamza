@@ -1,11 +1,12 @@
 using System;
 using System.Text;
+using CGamza.Item;
 using CGamza.Pet;
 
 namespace CGamza.Entity.Monster
 {
   [Serializable]
-  public abstract class CMonster
+  public abstract class CMonster : IItemTarget
   {
     public string Name { get; }
     public EntityType Type { get; }

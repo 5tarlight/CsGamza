@@ -7,11 +7,16 @@ namespace CGamza.Item
   [Serializable]
   public class HpPotion : CItem, IUsableItem
   {
+    public bool SelfUsable
+    {
+      get { return true; }
+    }
+
     public HpPotion() : base("HP 포션")
     {
     }
     
-    public bool OnUse(IItemTarget user)
+    public bool OnUse(IItemTarget user, IItemTarget t)
     {
       if (user is CPet)
       {

@@ -202,12 +202,13 @@ namespace CGamza.Inventory
         var usable = item.Item as IUsableItem;
 
         if (usable == null) return false;
+        if (!usable.SelfUsable) return false;
 
         var target = BattleManager.SelectPet();
         if (target == -1) return false;  
 
         for (var i = 0; i < count; i++)
-          result = result && usable.OnUse(PlayerManager.CurrentPlayer.Pets[target]);
+          result = result && usable.OnUse(PlayerManager.CurrentPlayer.Pets[target], null);
         
         PlayerManager.CurrentInventory.MinusItem(item.Item, count);
         return result;
