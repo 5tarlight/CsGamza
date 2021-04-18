@@ -58,6 +58,13 @@ namespace CGamza.Battle
 
     public static void StartBattle(CMonster opponent, double expCoe = 1.15)
     {
+      if (CurrentPlayer.Pets.Length < 1 || CurrentPlayer.IsAllPetDead)
+      {
+        ConsoleUtil.WriteColor("전투가능한 펫이 없슴니다.");
+        ConsoleUtil.Pause();
+        return;
+      }
+
       var random = new Random();
       var firstAtk = random.Next(0, 2) == 0 ? true : false;
 
