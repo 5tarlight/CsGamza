@@ -21,6 +21,10 @@ namespace CGamza.Item
       if (user is CPet)
       {
         var target = user as CPet;
+
+        if (target.Info.Health == target.Info.MaxHealth)
+          return false;
+
         target.Info.Heal(50);
         return true;
       }
