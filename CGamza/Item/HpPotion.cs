@@ -1,6 +1,5 @@
 ﻿using System;
 using CGamza.Entity.Pet;
-using CGamza.Player;
 
 namespace CGamza.Item
 {
