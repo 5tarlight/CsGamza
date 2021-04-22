@@ -10,6 +10,7 @@ using CGamza.Util;
 
 using static CGamza.Player.PlayerManager;
 using CGamza.Item;
+using System.Reflection.Emit;
 
 namespace CGamza.Battle
 {
@@ -91,6 +92,8 @@ namespace CGamza.Battle
         }
 
         Console.Clear();
+        CurrentPlayer.Pets[pet].Info.Reset();
+        opponent.Info.Reset();
         ShowRound(pet, opponent);
 
         int action = -1;
@@ -180,12 +183,14 @@ namespace CGamza.Battle
         var exp = Math.Pow(expCoe, opponent.Info.Level - CurrentPlayer.Pets[pet].Info.Level);
         CurrentPlayer.Pets[pet].Info.SetExp(exp, ExpAction.Up);
         ConsoleUtil.WriteColor($"{Math.Ceiling(exp)} 경험치를 얻었습니다.");
+        CurrentPlayer.Pets[pet].Info.Reset();
 
         ConsoleUtil.Pause();
       }
       else if (CurrentPlayer.IsAllPetDead)
       {
         ConsoleUtil.WriteColor("패배했습니다.");
+        CurrentPlayer.Pets[pet].Info.Reset();
         ConsoleUtil.Pause();
       }
     }
@@ -271,8 +276,8 @@ namespace CGamza.Battle
       var before = CurrentPlayer.Pets[pet].Info.Health;
 
       var dmg = monster.AtkType == DmgType.ATTACK_DAMAGE
-        ? monster.Info.AdAtk
-        : monster.Info.ApAtk;
+        ? monster.Info.GetAdAtk()
+        : monster.Info.GetApAtk();
       
       var damage = new Damage(dmg * 50, monster.AtkType);
       CurrentPlayer.Pets[pet].Info.DealDmg(damage);
@@ -290,7 +295,7 @@ namespace CGamza.Battle
 
       if (skill.SkillType == SkillType.CHANGE)
       {
-        // TODO
+        skill.OnUse(CurrentPlayer.Pets[pet], monster);
       }
       else
       {

@@ -34,8 +34,8 @@ namespace CGamza.Entity.Monster
         .Append($"{Name}\n")
         .Append($"Lv. {Info.Level}\n\n")
         .Append($"채력 : {Math.Ceiling(Info.Health)} / {Math.Ceiling(Info.MaxHealth)}\n")
-        .Append($"공격력 : {Math.Floor(Info.AdAtk)} | {Math.Floor(Info.ApAtk)}\n")
-        .Append($"방어력 : {Math.Floor(Info.AdEndur)} | {Math.Floor(Info.ApEndur)}");
+        .Append($"공격력 : {Math.Floor(Info.GetAdAtk())} | {Math.Floor(Info.GetApAtk())}\n")
+        .Append($"방어력 : {Math.Floor(Info.GetAdEndur())} | {Math.Floor(Info.GetApEndur())}");
 
       return sb.ToString();
     }

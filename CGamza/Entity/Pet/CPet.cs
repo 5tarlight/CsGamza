@@ -86,8 +86,8 @@ namespace CGamza.Entity.Pet
         .Append($"Lv. {Info.Level}\n")
         .Append($"다음 레벨까지 {Math.Ceiling(GetNeedExpForNextLvl())}\n\n")
         .Append($"채력 : {Math.Ceiling(Info.Health)} / {Math.Ceiling(Info.MaxHealth)}\n")
-        .Append($"공격력 : {Math.Floor(Info.AdAtk)} | {Math.Floor(Info.ApAtk)}\n")
-        .Append($"방어력 : {Math.Floor(Info.AdEndur)} | {Math.Floor(Info.ApEndur)}");
+        .Append($"공격력 : {Math.Ceiling(Info.GetAdAtk())} | {Math.Ceiling(Info.GetApAtk())}\n")
+        .Append($"방어력 : {Math.Ceiling(Info.GetAdEndur())} | {Math.Ceiling(Info.GetApEndur())}");
 
       return sb.ToString();
     }

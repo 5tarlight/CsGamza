@@ -197,9 +197,11 @@ namespace CGamza.Entity.Pet
       
       msg.Append("\n")
         .Append($"Lv. {pet.Info.Level}\n")
-        .Append($"채력 : {Math.Ceiling(pet.Info.Health)} / {Math.Ceiling(pet.Info.MaxHealth)}\n")
         .Append($"경험치 : {Math.Ceiling(pet.Info.Exp)}\n")
         .Append($"다음 레벨까지 {Math.Ceiling(pet.GetNeedExpForNextLvl())}필요\n\n")
+        .Append($"채력 : {Math.Ceiling(pet.Info.Health)} / {Math.Ceiling(pet.Info.MaxHealth)}\n")
+        .Append($"공격력 : {Math.Ceiling(pet.Info.GetAdAtk())} | {Math.Ceiling(pet.Info.GetApAtk())}\n")
+        .Append($"방어력 : {Math.Ceiling(pet.Info.GetAdEndur())} | {Math.Ceiling(pet.Info.GetApEndur())}\n\n")
         .Append("기술\n");
 
       foreach (var s in pet.Skills)

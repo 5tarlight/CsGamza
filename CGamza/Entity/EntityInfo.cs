@@ -9,10 +9,11 @@ namespace CGamza.Entity
   {
     public double Health { get; set; }
     public double MaxHealth { get; internal set; }
-    public double AdEndur { get; set; } // 물리
-    public double ApEndur { get; set; } // 마법
+    public double AdEndur { get; set; }
+    public double ApEndur { get; set; }
     public double AdAtk { get; set; }
     public double ApAtk { get; set; }
+
     public double Exp { get; set; }
     public int Level { get; set; }
 
@@ -23,6 +24,31 @@ namespace CGamza.Entity
     internal double AdAtkCoe;
     internal double ApAtkCoe;
     internal double BaseHealth;
+
+    public int CurAdDurDown { get; private set; }
+    public int CurApDurDown { get; private set; }
+    public int CurAdDown { get; private set; }
+    public int CurApDown { get; private set; }
+
+    public double GetAdEndur()
+    {
+      return Math.Max(AdEndur * 25 - AdEndur * 25 * (1 - Math.Min(CurAdDurDown, 5) / 10), 0);
+    }
+
+    public double GetApEndur()
+    {
+      return Math.Max(ApEndur * 25 - ApEndur * 25 * (1 - Math.Min(CurApDurDown, 5) / 10), 0);
+    }
+
+    public double GetAdAtk()
+    {
+      return AdAtk * 25 - AdAtk * 25 * (1 - Math.Min(CurAdDown, 5) / 10);
+    }
+
+    public double GetApAtk()
+    {
+      return Math.Max(ApAtk * 25 - ApAtk * 25 * (1 - Math.Min(CurApDown, 5) / 10), 0);
+    }
 
     public EntityInfo(
       double baseAd,
@@ -46,6 +72,11 @@ namespace CGamza.Entity
       AdAtkCoe = adtCoe;
       ApAtkCoe = aptCoe;
       BaseHealth = baseHp;
+
+      CurApDurDown = 0;
+      CurAdDurDown = 0;
+      CurAdDown = 0;
+      CurApDown = 0;
 
       CalculateLevel();
       ApplyLevel();
@@ -104,14 +135,40 @@ namespace CGamza.Entity
           Health -= damage.Dmg;
           break;
         case DmgType.ATTACK_DAMAGE:
-          var dmg = damage.Dmg * (1 - AdEndur / 10 / 100);
+          var dur = Math.Max(GetAdEndur(), 0);
+          var dmg = damage.Dmg * (1 - dur / 10 / 100);
           Health -= dmg;
           break;
         case DmgType.ABILITY_POWER:
-          var d = damage.Dmg * (1 - ApEndur / 10 / 100);
+          var cdur = Math.Max(GetApEndur(), 0);
+          var d = damage.Dmg * (1 - cdur / 10 / 100);
           Health -= d;
           break;
       }
+    }
+
+    public void DownDur(int step, bool isAd)
+    {
+      if (isAd)
+        CurAdDurDown++;
+      else
+        CurApDurDown++;
+    }
+
+    public void DownAtk(int step, bool isAd)
+    {
+      if (isAd)
+        CurAdDown++;
+      else
+        CurApDown++;
+    }
+
+    public void Reset()
+    {
+      CurAdDurDown = 0;
+      CurAdDurDown = 0;
+      CurAdDown = 0;
+      CurApDown = 0;
     }
   }
 }
