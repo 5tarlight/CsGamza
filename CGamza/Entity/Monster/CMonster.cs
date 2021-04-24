@@ -13,7 +13,8 @@ namespace CGamza.Entity.Monster
     public EntityType? SecondaryType { get; }
     public EntityInfo Info { get; protected set; }
     public DmgType AtkType { get; }
-    public bool IsDead {
+    public bool IsDead
+    {
       get
       {
         return Info.Health <= 0;
@@ -34,7 +35,7 @@ namespace CGamza.Entity.Monster
         .Append($"{Name}\n")
         .Append($"Lv. {Info.Level}\n\n")
         .Append($"채력 : {Math.Ceiling(Info.Health)} / {Math.Ceiling(Info.MaxHealth)}\n")
-        .Append($"공격력 : {Math.Floor(Info.GetAdAtk())} | {Math.Floor(Info.GetApAtk())}\n")
+        .Append($"공격력 : {Info.GetAdAtk()} | {Math.Floor(Info.GetApAtk())}\n")
         .Append($"방어력 : {Math.Floor(Info.GetAdEndur())} | {Math.Floor(Info.GetApEndur())}");
 
       return sb.ToString();

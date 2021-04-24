@@ -32,22 +32,22 @@ namespace CGamza.Entity
 
     public double GetAdEndur()
     {
-      return Math.Max(AdEndur * 25 - AdEndur * 25 * (1 - Math.Min(CurAdDurDown, 5) / 10), 0);
+      return AdEndur * 25 * (1 - Math.Min(CurAdDurDown, 5) / 10);
     }
 
     public double GetApEndur()
     {
-      return Math.Max(ApEndur * 25 - ApEndur * 25 * (1 - Math.Min(CurApDurDown, 5) / 10), 0);
+      return ApEndur * 25 * (1 - Math.Min(CurApDurDown, 5) / 10);
     }
 
     public double GetAdAtk()
     {
-      return AdAtk * 25 - AdAtk * 25 * (1 - Math.Min(CurAdDown, 5) / 10);
+      return AdAtk * 25 * (1 - Math.Min(CurAdDown, 5) / 10);
     }
 
     public double GetApAtk()
     {
-      return Math.Max(ApAtk * 25 - ApAtk * 25 * (1 - Math.Min(CurApDown, 5) / 10), 0);
+      return ApAtk * 25 * (1 - Math.Min(CurApDown, 5) / 10);
     }
 
     public EntityInfo(
@@ -129,7 +129,7 @@ namespace CGamza.Entity
       switch (damage.DmgType)
       {
         case DmgType.EXECUTION:
-          Health  = -1;
+          Health = -1;
           break;
         case DmgType.TRUE_DAMAGE:
           Health -= damage.Dmg;

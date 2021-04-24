@@ -7,10 +7,9 @@ using CGamza.Entity.Pet.Skill;
 using CGamza.Pet;
 using CGamza.Player;
 using CGamza.Util;
+using CGamza.Item;
 
 using static CGamza.Player.PlayerManager;
-using CGamza.Item;
-using System.Reflection.Emit;
 
 namespace CGamza.Battle
 {
@@ -112,7 +111,7 @@ namespace CGamza.Battle
           else break;
         }
 
-        #nullable enable
+#nullable enable
         SSkill? skill = null;
 
         switch (action)
@@ -141,16 +140,16 @@ namespace CGamza.Battle
               }
             }
             while (!result);
-            
+
             break;
           case 2: // Swap Pet
             int switched;
             do
             {
-              switched = SelectPet();  
+              switched = SelectPet();
             }
             while (pet == switched);
-            
+
             pet = switched;
 
             ConsoleUtil.WriteColor($"펫을 {CurrentPlayer.Pets[switched].Name}으로 교체했습니다.");
@@ -198,8 +197,8 @@ namespace CGamza.Battle
     private static int SelectItem()
     {
       var usable = (from item in CurrentInventory.Items
-        where item.Item is IUsableItem
-        select item).ToList();
+                    where item.Item is IUsableItem
+                    select item).ToList();
 
       if (usable.Count < 1)
       {
@@ -209,7 +208,7 @@ namespace CGamza.Battle
       }
 
       var q = from item in usable
-        select new SelectableQuestion(item.Item.Name);
+              select new SelectableQuestion(item.Item.Name);
 
       var i = ConsoleUtil.AskSelectableQuestion("아이템", q.ToList());
 
@@ -243,7 +242,7 @@ namespace CGamza.Battle
           if (s.Point > 0 && notAvail) notAvail = false;
         }
       }
-      
+
       int skill;
       SSkill ss = new STackle();
 
@@ -266,7 +265,7 @@ namespace CGamza.Battle
         }
       }
       while (ss.Point <= 0);
-      
+
       return ss;
     }
 
@@ -278,7 +277,7 @@ namespace CGamza.Battle
       var dmg = monster.AtkType == DmgType.ATTACK_DAMAGE
         ? monster.Info.GetAdAtk()
         : monster.Info.GetApAtk();
-      
+
       var damage = new Damage(dmg * 50, monster.AtkType);
       CurrentPlayer.Pets[pet].Info.DealDmg(damage);
 
@@ -287,7 +286,7 @@ namespace CGamza.Battle
       ConsoleUtil.WriteColor($"{CurrentPlayer.Pets[pet].Name}은 {before - after}의 피해를 입었다.");
       ConsoleUtil.Pause(true);
     }
-    
+
     private static void PetAttack(int pet, CMonster monster, SSkill skill)
     {
       ConsoleUtil.WriteColor($"{CurrentPlayer.Pets[pet].Name}의 {skill.Name}");
