@@ -275,8 +275,8 @@ namespace CGamza.Battle
       var before = CurrentPlayer.Pets[pet].Info.Health;
 
       var dmg = monster.AtkType == DmgType.ATTACK_DAMAGE
-        ? monster.Info.GetAdAtk()
-        : monster.Info.GetApAtk();
+        ? monster.Info.AdAtk
+        : monster.Info.ApAtk;
 
       var damage = new Damage(dmg * 50, monster.AtkType);
       CurrentPlayer.Pets[pet].Info.DealDmg(damage);

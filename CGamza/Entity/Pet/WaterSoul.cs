@@ -12,7 +12,7 @@ namespace CGamza.Entity.Pet
       base.Info = info;
 
       AddSkill(new STackle());
-      AddSkill(new SProvocate());
+      AddSkill(new SDefensePosture());
     }
   }
 }
