@@ -1,6 +1,7 @@
 using System;
 using CGamza.Battle;
 using CGamza.Pet;
+using CGamza.Util;
 
 namespace CGamza.Entity
 {
@@ -25,29 +26,29 @@ namespace CGamza.Entity
     internal double ApAtkCoe;
     internal double BaseHealth;
 
-    public int CurAdDurDown { get; private set; }
-    public int CurApDurDown { get; private set; }
-    public int CurAdDown { get; private set; }
-    public int CurApDown { get; private set; }
+    public int curAdDurDown;
+    public int curApDurDown;
+    public int curAdDown;
+    public int curApDown;
 
     public double GetAdEndur()
     {
-      return AdEndur * 25 * (1 - Math.Min(CurAdDurDown, 5) / 10);
+      return AdEndur * 25 * (1 - Math.Min(curAdDurDown * 2, 10) / 10);
     }
 
     public double GetApEndur()
     {
-      return ApEndur * 25 * (1 - Math.Min(CurApDurDown, 5) / 10);
+      return ApEndur * 25 * (1 - Math.Min(curApDurDown * 2, 10) / 10);
     }
 
     public double GetAdAtk()
     {
-      return AdAtk * 25 * (1 - Math.Min(CurAdDown, 5) / 10);
+      return AdAtk * 25 * (1 - Math.Min(curAdDown * 2, 10) / 10);
     }
 
     public double GetApAtk()
     {
-      return ApAtk * 25 * (1 - Math.Min(CurApDown, 5) / 10);
+      return ApAtk * 25 * (1 - Math.Min(curApDown * 2, 10) / 10);
     }
 
     public EntityInfo(
@@ -73,10 +74,10 @@ namespace CGamza.Entity
       ApAtkCoe = aptCoe;
       BaseHealth = baseHp;
 
-      CurApDurDown = 0;
-      CurAdDurDown = 0;
-      CurAdDown = 0;
-      CurApDown = 0;
+      curApDurDown = 0;
+      curAdDurDown = 0;
+      curAdDown = 0;
+      curApDown = 0;
 
       CalculateLevel();
       ApplyLevel();
@@ -150,25 +151,25 @@ namespace CGamza.Entity
     public void DownDur(int step, bool isAd)
     {
       if (isAd)
-        CurAdDurDown++;
+        curAdDurDown += step;
       else
-        CurApDurDown++;
+        curApDurDown += step;
     }
 
     public void DownAtk(int step, bool isAd)
     {
       if (isAd)
-        CurAdDown++;
+        curAdDown += step;
       else
-        CurApDown++;
+        curApDown += step;
     }
 
     public void Reset()
     {
-      CurAdDurDown = 0;
-      CurAdDurDown = 0;
-      CurAdDown = 0;
-      CurApDown = 0;
+      curAdDurDown = 0;
+      curApDurDown = 0;
+      curAdDown = 0;
+      curApDown = 0;
     }
   }
 }

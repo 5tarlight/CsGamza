@@ -66,7 +66,7 @@ namespace CGamza.Battle
       }
 
       var random = new Random();
-      var firstAtk = random.Next(0, 2) == 0 ? true : false;
+      var firstAtk = random.Next(0, 2) == 0;
 
       Console.Clear();
       ConsoleUtil.WriteColor("전투가 시작되었습니다.");
@@ -76,6 +76,9 @@ namespace CGamza.Battle
       var pet = SelectPet();
       if (pet == -1) return;
 
+      CurrentPlayer.Pets[pet].Info.Reset();
+      opponent.Info.Reset();
+      
       do
       {
         if (CurrentPlayer.Pets[pet].IsDead)
@@ -91,8 +94,7 @@ namespace CGamza.Battle
         }
 
         Console.Clear();
-        CurrentPlayer.Pets[pet].Info.Reset();
-        opponent.Info.Reset();
+        
         ShowRound(pet, opponent);
 
         int action = -1;
@@ -294,7 +296,8 @@ namespace CGamza.Battle
 
       if (skill.SkillType == SkillType.CHANGE)
       {
-        skill.OnUse(CurrentPlayer.Pets[pet], monster);
+        skill.OnUse(ref CurrentPlayer.Pets[pet], ref monster);
+        ConsoleUtil.Pause(true);
       }
       else
       {
@@ -320,7 +323,7 @@ namespace CGamza.Battle
       ConsoleUtil.WriteColor(opponent.ToString());
       ConsoleUtil.WriteColor("");
       ConsoleUtil.WriteColor("");
-      ConsoleUtil.WriteColor(PlayerManager.CurrentPlayer.Pets[pet].ToString());
+      ConsoleUtil.WriteColor(CurrentPlayer.Pets[pet].ToString());
       ConsoleUtil.Pause();
     }
 

@@ -79,6 +79,13 @@ namespace CGamza.Entity.Pet
       return Math.Ceiling(up - Info.Exp);
     }
 
+    private string GetWithCode(double value)
+    {
+      var code = value >= 0 ? "-" : "+";
+
+      return $"{code}{Math.Abs(value)}";
+    }
+    
     public override string ToString()
     {
       var sb = new StringBuilder()
@@ -86,8 +93,8 @@ namespace CGamza.Entity.Pet
         .Append($"Lv. {Info.Level}\n")
         .Append($"다음 레벨까지 {Math.Ceiling(GetNeedExpForNextLvl())}\n\n")
         .Append($"채력 : {Math.Ceiling(Info.Health)} / {Math.Ceiling(Info.MaxHealth)}\n")
-        .Append($"공격력 : {Math.Ceiling(Info.GetAdAtk())} | {Math.Ceiling(Info.GetApAtk())}\n")
-        .Append($"방어력 : {Math.Ceiling(Info.GetAdEndur())} | {Math.Ceiling(Info.GetApEndur())}");
+        .Append($"공격력 : {Info.GetAdAtk()} ({GetWithCode(Info.curAdDown)}) | {Info.GetApAtk()} ({GetWithCode(Info.curApDown)})\n")
+        .Append($"방어력 : {Info.GetAdEndur()} ({GetWithCode(Info.curAdDurDown)}) | {Info.GetApEndur()} ({GetWithCode(Info.curApDurDown)})");
 
       return sb.ToString();
     }

@@ -28,6 +28,6 @@ namespace CGamza.Entity.Pet.Skill
       Point = MaxPoint;
     }
 
-    public abstract void OnUse(CPet user, CMonster opponent);
+    public abstract void OnUse(ref CPet user, ref CMonster opponent);
   }
 }

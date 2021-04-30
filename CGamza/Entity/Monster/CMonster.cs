@@ -2,6 +2,7 @@ using System;
 using System.Text;
 using CGamza.Item;
 using CGamza.Pet;
+using CGamza.Util;
 
 namespace CGamza.Entity.Monster
 {
@@ -29,14 +30,21 @@ namespace CGamza.Entity.Monster
       SecondaryType = sec;
     }
 
+    private string GetWithCode(double value)
+    {
+      var code = value >= 0 ? "-" : "+";
+
+      return $"{code}{Math.Abs(value)}";
+    }
+
     public override string ToString()
     {
       var sb = new StringBuilder()
         .Append($"{Name}\n")
         .Append($"Lv. {Info.Level}\n\n")
         .Append($"채력 : {Math.Ceiling(Info.Health)} / {Math.Ceiling(Info.MaxHealth)}\n")
-        .Append($"공격력 : {Info.GetAdAtk()} | {Math.Floor(Info.GetApAtk())}\n")
-        .Append($"방어력 : {Math.Floor(Info.GetAdEndur())} | {Math.Floor(Info.GetApEndur())}");
+        .Append($"공격력 : {Info.GetAdAtk()} ({GetWithCode(Info.curAdDown)}) | {Info.GetApAtk()} ({GetWithCode(Info.curApDown)})\n")
+        .Append($"방어력 : {Info.GetAdEndur()} ({GetWithCode(Info.curAdDurDown)}) | {Info.GetApEndur()} ({GetWithCode(Info.curApDurDown)})");
 
       return sb.ToString();
     }

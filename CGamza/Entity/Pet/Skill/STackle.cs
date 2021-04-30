@@ -11,7 +11,7 @@ namespace CGamza.Entity.Pet.Skill
     public STackle() : base("태클", 30, SkillType.PHYSICAL, EntityType.NORMAL, 45)
     { }
 
-    public override void OnUse(CPet user, CMonster opponent)
+    public override void OnUse(ref CPet user, ref CMonster opponent)
     {
       var dmg = BattleManager.CalDamage(
         this.Damage,
